@@ -1,0 +1,1 @@
+//This is a router file that routes the application to the correct page.
