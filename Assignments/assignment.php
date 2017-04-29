@@ -60,12 +60,3 @@
 		}
 	}
 ?>
-
-Assignments Majed(index,show,create,edit)
-ID
-Name
-Course Name (Foreign Key)
-Due Date
-Max Score
-Test ID
-Create At
