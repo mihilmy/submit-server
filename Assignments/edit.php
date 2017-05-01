@@ -41,28 +41,47 @@
 				<h1 class="col-sm-offset-2">Edit Assignment</h1>
 			</header>
 		</div>
-		
+			<?php
+			require_once('assignment.php');
+			require_once("../Services/DatabaseProvider.php");
+				$assignmentid = $_GET['assignmentid'];
+				$conn = DatabaseProvider::getInstance()->getConnectionString();
+				$sql = "SELECT * FROM Assignments where assignment_ID=$assignmentid";
+				$result = $conn->query($sql);
+				$assignment = Assignment::parseDbResult($result->fetch_assoc());
+				
+			
+			?>
 	 	<div class="container">
 	 		<form action="creationVerification.php" method="post" class="form-horizontal">
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Assignment Name: </label>
 				<div class="col-sm-4">
-					<input type="text" name="assignmentName" class="form-control" required>
+				<?php
+				$san = $assignment->getName();
+					echo "<input type='text' name='assignmentName' class='form-control' value='{$san}'required>"
+				?>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Max Score: </label>
 				<div class="col-sm-4">
-					<input type="text" name="maxScore" class="form-control" required>
+					<?php
+					$san = $assignment->getMaxScore();
+						echo "<input type='text' name='maxScore' class='form-control' value='{$san}'required>"
+					?>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Due Date: </label>
 				<div class="col-sm-4">
-					<input type="datetime-local" name="dueDate" class="form-control" required>
+				<?php
+				$san = str_replace (" ", "T", $assignment->getDueDateString());
+					echo "<input type='datetime-local' name='dueDate' class='form-control' value='{$san}'required>"
+				?>
 				</div>
 			</div>
 					
@@ -70,7 +89,11 @@
 			<div class="col-sm-offset-2">
 				<input name="submitEditAssignment" type="submit" class="btn btn-success" value="Submit Changes">
 			</div>
-			<input type="hidden" name="id" value="Norway">
+			
+			<?php
+                $toEcho = "<input type='hidden' name='assignmentid' value='{$_GET['assignmentid']}'>";
+			echo $toEcho;
+			?>
 			</form>
 	 	</div>
 	 	

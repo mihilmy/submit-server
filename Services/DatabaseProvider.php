@@ -8,6 +8,7 @@
 		private $password;
 		private $database;
 		private $conn;
+		private static $instance;
 
 		public function __construct(){
 			$this->servername = "localhost";
@@ -134,11 +135,22 @@ DEMO;
 			$this->publishTeacher_Classes();
 		}
 
-	
+		public static function getInstance()
+		{
+			// Check is $_instance has been set
+			if(!isset(self::$instance)) 
+			{
+				// Creates sets object to instance
+				self::$instance = new DatabaseProvider();
+				self::$instance->publish();
+			}
+
+			// Returns the instance
+			return self::$instance;
+		}
 
 	}
 
-	$instance = new DatabaseProvider();
-	$instance->publish();
+
 
 ?>

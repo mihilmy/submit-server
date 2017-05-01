@@ -35,8 +35,8 @@
     <div id="mainDiv">
     <?php
 require_once('assignment.php');
+require_once("../Services/DatabaseProvider.php");
 if(isset($_POST['submitNewAssignment'])) {
-
     $newAssignment = Assignment::createNew($_POST['assignmentName'],$_POST['courseName'], str_replace ("T", " ", $_POST['dueDate']), $_POST['maxScore']);
     
     if($newAssignment != null) {
@@ -45,11 +45,14 @@ if(isset($_POST['submitNewAssignment'])) {
         echo 'failed';
     }
 } else if(isset($_POST['submitEditAssignment'])){
-    $sql = "SELECT * FROM Assignments where id={$_POST['assignment_ID']}";
-    $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
+    $sql = "SELECT * FROM Assignments where assignment_id={$_POST['assignmentid']}";
+    $conn = DatabaseProvider::getInstance()->getConnectionString();
     $result = $conn->query($sql);
-    if(result != null) {
+    if($result != null) {
         $newAssignment = Assignment::parseDbResult($result->fetch_assoc());
+        $newAssignment->setDueDate(str_replace ("T", " ", $_POST['dueDate']));
+        $newAssignment->setName($_POST['assignmentName']);
+        $newAssignment->setMaxScore($_POST['maxScore']);
         echo 'success';
     } else {
         echo 'fail';

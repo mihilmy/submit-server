@@ -1,4 +1,5 @@
 <?php 
+	require_once("../Services/DatabaseProvider.php");
 	class Assignment {
 		public $Id;
 		public $name;
@@ -26,7 +27,8 @@
 			$instance->dueDate = new DateTime($dueDate);
 			$instance->maxScore = $maxScore;
 			$instance->testId = null;
-			$conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
+			$conn = DatabaseProvider::getInstance();
+			$conn = $conn->getConnectionString();
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			} 
@@ -47,13 +49,12 @@
 		public static function parseDbResult($row) {
             $instance = new self();
             date_default_timezone_set('EST');
-			$instance->Id = $row['id'];
+			$instance->Id = $row['assignment_ID'];
 			$instance->name = $row['name'];
-			$instance->courseName = $row['courseName'];
+			$instance->courseName = $row['class_name'];
 			date_default_timezone_set('EST');
-			$instance->dueDate = new DateTime($row['dueDate']);
-			$instance->maxScore = $row['maxScore'];
-			$instance->testId = $row['testId'];
+			$instance->dueDate = new DateTime($row['due_date']);
+			$instance->maxScore = $row['max_score'];
             return $instance;
 		}
 		
@@ -67,7 +68,7 @@
         
         public function setName($newName) {
             $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
-            $sql = "UPDATE Assignments SET name='$name' WHERE id=$this->id";
+            $sql = "UPDATE Assignments SET name='$newName' WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->name = $newName;
@@ -89,7 +90,7 @@
         
         public function setMaxScore($newMax) {
             $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
-            $sql = "UPDATE Assignments SET maxScore=$newMax WHERE id=$this->id";
+            $sql = "UPDATE Assignments SET max_score=$newMax WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->maxScore = $newMax;
@@ -113,7 +114,7 @@
         
         public function setDueDate($newDueDate) {
             $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
-            $sql = "UPDATE Assignments SET dueDate='$newDueDate' WHERE id=$this->id";
+            $sql = "UPDATE Assignments SET due_date='$newDueDate' WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->dueDate = new DateTime($newDueDate);

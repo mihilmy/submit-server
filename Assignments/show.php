@@ -1,4 +1,5 @@
 <?php
+require_once("../Services/DatabaseProvider.php");
 	session_start();
 		//if(!isset($_SESSION['username'])) {
 		//	header('Location:'.$_SERVER['REQUEST_URI'].'/../../login.php');
@@ -49,7 +50,7 @@
 			<b> Assignment Info</b>
 			<?php
             
-            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
+            $conn = DatabaseProvider::getInstance()->getConnectionString();
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			}
