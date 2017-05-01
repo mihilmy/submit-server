@@ -26,13 +26,13 @@
 			$instance->dueDate = new DateTime($dueDate);
 			$instance->maxScore = $maxScore;
 			$instance->testId = null;
-			
+			$conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			} 
 
 			$sql = "INSERT INTO Assignments (Name,courseName,dueDate,maxScore)
-			VALUES ($name, $courseName , $dueDate, $maxScore);";
+			VALUES ('$name', '$courseName' , '$dueDate', $maxScore);";
 
 			if ($conn->query($sql) === TRUE) {
 				$instance->Id = $conn->insert_id;
@@ -40,7 +40,6 @@
 			} else {
 				return null;
 			}
-			$instance->Id = $Id;
 		}
 		
 		public static function parseDbResult($row) {
@@ -65,6 +64,7 @@
 		}
         
         public function setName($newName) {
+            $conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
             $sql = "UPDATE Assignments SET name='$name' WHERE id=$this->id";
 
             if ($conn->query($sql) === TRUE) {
@@ -84,6 +84,7 @@
 		}
         
         public function setMaxScore($newMax) {
+            $conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
             $sql = "UPDATE Assignments SET maxScore=$newMax WHERE id=$this->id";
 
             if ($conn->query($sql) === TRUE) {
@@ -106,7 +107,8 @@
 		}
         
         public function setDueDate($newDueDate) {
-            $sql = "UPDATE Assignments SET dueDate=$newDueDate WHERE id=$this->id";
+            $conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
+            $sql = "UPDATE Assignments SET dueDate='$newDueDate' WHERE id=$this->id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->dueDate = new DateTime($newDueDate);
