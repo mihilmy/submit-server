@@ -43,7 +43,7 @@
 		</div>
 		
 	 	<div class="container">
-	 		<form action="" method="post" class="form-horizontal"  encytype="multipart/form-data">
+	 		<form action="creationVerification.php" method="post" class="form-horizontal">
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Assignment Name: </label>
@@ -65,19 +65,12 @@
 					<input type="datetime-local" name="dueDate" class="form-control" required>
 				</div>
 			</div>
-			
-			<div class="form-group">
-			<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
-				<label class="col-sm-2 control-label">Replace Test File:(Do not select if you want to keep the old test) </label>
-				<div class="col-sm-4">
-					<input type="file" name="testFile" id="testFile">
-				</div>
-			</div>			
+					
 			
 			<div class="col-sm-offset-2">
-				<input type="submit" class="btn btn-success" value="Submit Changes">
+				<input name="submitEditAssignment" type="submit" class="btn btn-success" value="Submit Changes">
 			</div>
-			
+			<input type="hidden" name="id" value="Norway">
 			</form>
 	 	</div>
 	 	
