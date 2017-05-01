@@ -70,7 +70,10 @@
 			<div class="col-sm-offset-2">
 				<input name="submitNewAssignment" type="submit" class="btn btn-success" value="Create">
 			</div>
-                <input type="hidden" name="courseName" value="Norway">
+			<?php
+                $toEcho = "<input type='hidden' name='courseName' value='{$_GET['course']}'>";
+			echo $toEcho;
+			?>
 			</form>
 	 	</div>
 	 	

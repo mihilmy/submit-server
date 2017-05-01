@@ -42,18 +42,19 @@ if(isset($_POST['submitNewAssignment'])) {
     if($newAssignment != null) {
         echo 'The assignment has been succefully created';
     } else {
-        echo 'fail';
+        echo 'failed';
     }
 } else if(isset($_POST['submitEditAssignment'])){
-    $sql = "SELECT & FROM Assignment where id=$_POST['id']";
+    $sql = "SELECT * FROM Assignments where id={$_POST['assignment_ID']}";
+    $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
     $result = $conn->query($sql);
-    
     if(result != null) {
         $newAssignment = Assignment::parseDbResult($result->fetch_assoc());
         echo 'success';
     } else {
         echo 'fail';
     }
+    $conn->close();
 }
 
 ?>

@@ -26,18 +26,20 @@
 			$instance->dueDate = new DateTime($dueDate);
 			$instance->maxScore = $maxScore;
 			$instance->testId = null;
-			$conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
+			$conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			} 
 
-			$sql = "INSERT INTO Assignments (Name,courseName,dueDate,maxScore)
+			$sql = "INSERT INTO assignments (name,class_name,due_date,max_score)
 			VALUES ('$name', '$courseName' , '$dueDate', $maxScore);";
 
 			if ($conn->query($sql) === TRUE) {
 				$instance->Id = $conn->insert_id;
+				$conn->close();
                 return $instance;
 			} else {
+				$conn->close();
 				return null;
 			}
 		}
@@ -64,13 +66,15 @@
 		}
         
         public function setName($newName) {
-            $conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
+            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
             $sql = "UPDATE Assignments SET name='$name' WHERE id=$this->id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->name = $newName;
+				$conn->close();
                 return true;
             } else {
+				$conn->close();
                 return false;
             }
 		}
@@ -84,11 +88,12 @@
 		}
         
         public function setMaxScore($newMax) {
-            $conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
+            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
             $sql = "UPDATE Assignments SET maxScore=$newMax WHERE id=$this->id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->maxScore = $newMax;
+				$conn->close();
                 return true;
             } else {
                 return false;
@@ -107,13 +112,15 @@
 		}
         
         public function setDueDate($newDueDate) {
-            $conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
+            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
             $sql = "UPDATE Assignments SET dueDate='$newDueDate' WHERE id=$this->id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->dueDate = new DateTime($newDueDate);
+				$conn->close();	
                 return true;
             } else {
+				$conn->close();
                 return false;
             }
         }

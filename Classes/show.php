@@ -49,25 +49,24 @@
 			<b> Current Assignments</b>
 			<?php
             
-            $conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
+            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			}
 			$className = $_GET['course'];
-            $sql = "SELECT * FROM Assignments where courseName='$className'";
+            $sql = "SELECT * FROM Assignments where class_name='$className'";
             $result = $conn->query($sql);
 				echo "(Class: $className)";
 			
 	       ?>
 			<ul class="list-group">
 			<?php
-			$courses = array("CMSC389N", "CMSC420");
 			
             if ($result->num_rows > 0) {
                     // output data of each row
                 while($row = $result->fetch_assoc()) {
                     echo <<<H
-				<li class="list-group-item"><a href="../Assignments/show.php?course=$className&assignmentid={$row['ID']}">{$row['Name']}</a> <span class="label label-warning">Due Date: {$row['dueDate']}</span></li>
+				<li class="list-group-item"><a href="../Assignments/show.php?course=$className&assignmentid={$row['assignment_ID']}">{$row['name']}</a> <span class="label label-warning">Due Date: {$row['due_date']}</span></li>
 H;
                 }
             } else {

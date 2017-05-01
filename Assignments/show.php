@@ -49,13 +49,13 @@
 			<b> Assignment Info</b>
 			<?php
             
-            $conn = new mysqli("localhost", "dbuser", "goodbyeWorld", "applicationdb");
+            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			}
 			$className = $_GET['course'];
             $assignmentid = $_GET['assignmentid'];
-            $sql = "SELECT * FROM Assignments where id=$assignmentid";
+            $sql = "SELECT * FROM Assignments where assignment_ID=$assignmentid";
             $result = $conn->query($sql);
 				echo "(Class: $className)";
 			
@@ -71,16 +71,16 @@
                 
                     echo <<<H
                     <li class="list-group-item">
-                        <span class="badge">{$row['Name']}</span>
+                        <span class="badge">{$row['name']}</span>
                             Assignment Name
                     </li>
                     <li class="list-group-item">
-                        <span class="badge">{$row['dueDate']}</span>
+                        <span class="badge">{$row['due_date']}</span>
                            Due Date
                     </li>
                     
                     <li class="list-group-item">
-                        <span class="badge">{$row['maxScore']}</span>
+                        <span class="badge">{$row['max_score']}</span>
                            maxScore
                     </li>
 H;
