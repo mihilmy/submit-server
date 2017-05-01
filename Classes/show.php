@@ -53,7 +53,7 @@
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			}
-			$className = "Norway";
+			$className = $_GET['course'];
             $sql = "SELECT * FROM Assignments where courseName='$className'";
             $result = $conn->query($sql);
 				echo "(Class: $className)";
