@@ -43,7 +43,7 @@
 		</div>
 		
 	 	<div class="container">
-	 		<form action="creationVerification.php" method="post" class="form-horizontal">
+	 		<form action="creationVerification.php" method="post" class="form-horizontal" enctype="multipart/form-data">
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Assignment Name: </label>
@@ -63,6 +63,13 @@
 				<label class="col-sm-2 control-label">Due Date: </label>
 				<div class="col-sm-4">
 					<input type="datetime-local" name="dueDate" class="form-control" required>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Test File: </label>
+				<div class="col-sm-4">
+					<input type="file" name="uploaded_file">
 				</div>
 			</div>
 						

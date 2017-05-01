@@ -78,14 +78,15 @@ DEMO;
 
 		private function publishAssignments(){
 			$query = <<<DEMO
-				CREATE TABLE IF NOT EXISTS assignments ( 
-    				assignment_ID INT(9) AUTO_INCREMENT PRIMARY KEY,
-    				name varchar(255) NOT NULL,
-    				class_name varchar(255),
-    				due_date DATETIME NOT NULL,
-    				max_score int NOT NULL,
-    				FOREIGN KEY(class_name) REFERENCES classes(name)
-    				)
+				CREATE TABLE IF NOT EXISTS tests ( 
+				    test_id INT(9) AUTO_INCREMENT PRIMARY KEY,
+				    test_file_name varchar(255) NOT NULL,
+					test_file_mime varchar(50) NOT NULL,
+				    assignment_id INT(9),
+					test_file_size BigInt Unsigned Not Null Default 0,
+					test_file_data MediumBlob Not Null,
+				    FOREIGN KEY(assignment_ID) REFERENCES assignments(assignment_ID)
+				    				)
 DEMO;
 
 
@@ -125,6 +126,24 @@ DEMO;
 			 	echo 'ERROR PUBLISING teachers_classes';
 			 }
 		}
+		
+		private function publishTests(){
+			$query = <<<DEMO
+				CREATE TABLE IF NOT EXISTS tests ( 
+    				test_id INT NOT NULL,
+    				test_file_name varchar(255) NOT NULL,
+					test_file_mime varchar(50) NOT NULL,
+					test_file_size BigInt Unsigned Not Null Default 0,
+					test_file_data MediumBlob Not Null,
+    				FOREIGN KEY(assignment_ID) REFERENCES teachers(assignment_ID)
+    				)
+DEMO;
+
+
+			 if (mysqli_query($this->conn, $query) === false){
+			 	echo 'ERROR PUBLISING tests';
+			 }
+		}
 
 		public function publish(){
 			$this->publishStudents();
@@ -133,12 +152,13 @@ DEMO;
 			$this->publishAssignments();
 			$this->publishStudent_Classes();
 			$this->publishTeacher_Classes();
+			$this->publishTests();
 		}
 
 		public static function getInstance()
 		{
 			// Check is $_instance has been set
-			if(!isset(self::$instance)) 
+			if(!isset(self::$instance) ) 
 			{
 				// Creates sets object to instance
 				self::$instance = new DatabaseProvider();

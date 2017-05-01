@@ -38,6 +38,51 @@ require_once('assignment.php');
 require_once("../Services/DatabaseProvider.php");
 if(isset($_POST['submitNewAssignment'])) {
     $newAssignment = Assignment::createNew($_POST['assignmentName'],$_POST['courseName'], str_replace ("T", " ", $_POST['dueDate']), $_POST['maxScore']);
+      if(isset($_FILES['uploaded_file'])) {
+        // Make sure the file was sent without errors
+        if($_FILES['uploaded_file']['error'] == 0) {
+          // Connect to the database
+          $dbLink = DatabaseProvider::getInstance()->getConnectionString(); 
+          if(mysqli_connect_errno()) {
+            die("MySQL connection failed: ". mysqli_connect_error());
+          }
+       
+          // Gather all required data
+          $name = $dbLink->real_escape_string($_FILES['uploaded_file']['name']);
+          $mime = $dbLink->real_escape_string($_FILES['uploaded_file']['type']);
+          $data = $dbLink->real_escape_string(file_get_contents($_FILES  ['uploaded_file']['tmp_name']));
+          $size = intval($_FILES['uploaded_file']['size']);
+       
+          // Create the SQL query
+          $query = "
+            INSERT INTO `tests` (
+              `test_file_name`, `test_file_mime`,`assignment_id`, `test_file_size`, `test_file_data`)
+            VALUES (
+              '{$name}', '{$mime}',{$newAssignment->getId()}, {$size}, '{$data}')";
+       
+          // Execute the query
+          $result = $dbLink->query($query);
+       
+          // Check if it was successfull
+          if($result) {
+            
+          }
+          else {
+            echo 'Error! Failed to insert the file'
+               . "<pre>{$dbLink->error}</pre>";
+          }
+        }
+        else {
+          echo 'An error accured while the file was being uploaded. '
+             . 'Error code: '. intval($_FILES['uploaded_file']['error']);
+        }
+       
+        // Close the mysql connection
+        
+      }
+      else {
+        echo 'Error! A file was not sent!';
+      }
     
     if($newAssignment != null) {
         echo 'The assignment has been succefully created';
@@ -53,6 +98,7 @@ if(isset($_POST['submitNewAssignment'])) {
         $newAssignment->setDueDate(str_replace ("T", " ", $_POST['dueDate']));
         $newAssignment->setName($_POST['assignmentName']);
         $newAssignment->setMaxScore($_POST['maxScore']);
+
         echo 'success';
     } else {
         echo 'fail';
