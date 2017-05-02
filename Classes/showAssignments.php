@@ -70,9 +70,20 @@
 H;
                 }
             } else {
-                echo "0 results";
+                echo "No assignments";
 }
+				echo <<<H
+				
+				<div class="col-sm">
+				<br>
+				
+						<input type="submit" onclick="location.href='../Assignments/new.php?course={$_GET['course']}';" class="btn btn-success" value="Create">
+				</div>
+				
+H;
 			?>
+			
+
 			</ul>
 		</div>
             

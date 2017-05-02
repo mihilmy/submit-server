@@ -52,14 +52,14 @@ if(isset($_POST['submitNewAssignment'])) {
           $mime = $dbLink->real_escape_string($_FILES['uploaded_file']['type']);
           $data = $dbLink->real_escape_string(file_get_contents($_FILES  ['uploaded_file']['tmp_name']));
           $size = intval($_FILES['uploaded_file']['size']);
-       
+          
           // Create the SQL query
           $query = "
             INSERT INTO `tests` (
-              `test_file_name`, `test_file_mime`,`assignment_id`, `test_file_size`, `test_file_data`)
+              `test_file_name`, `test_file`, `number_of_test_cases`, `assignment_ID`)
             VALUES (
-              '{$name}', '{$mime}',{$newAssignment->getId()}, {$size}, '{$data}')";
-       
+              '{$name}', '{$data}',{$_POST['numTestCases']},{$newAssignment->getId()})";
+        //echo "<pre>{$query}</pre>";;
           // Execute the query
           $result = $dbLink->query($query);
        
@@ -73,8 +73,9 @@ if(isset($_POST['submitNewAssignment'])) {
           }
         }
         else {
-          echo 'An error accured while the file was being uploaded. '
-             . 'Error code: '. intval($_FILES['uploaded_file']['error']);
+          echo 'No file was uploaded';
+         // echo 'An error accured while the file was being uploaded. '
+          //   . 'Error code: '. intval($_FILES['uploaded_file']['error']);
         }
        
         // Close the mysql connection
@@ -85,7 +86,9 @@ if(isset($_POST['submitNewAssignment'])) {
       }
     
     if($newAssignment != null) {
-        echo 'The assignment has been succefully created';
+        echo 'The assignment has been succefully created, do not update the page';
+        sleep(1);
+        header("Location: ../Classes/showAssignments.php?course={$_POST['courseName']}");  
     } else {
         echo 'failed';
     }
@@ -115,3 +118,12 @@ if(isset($_POST['submitNewAssignment'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>
 </html>
+<?php 
+
+
+
+?>
+
+
+
+

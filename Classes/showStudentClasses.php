@@ -1,3 +1,10 @@
+<?php
+	session_start();
+		//if(!isset($_SESSION['username'])) {
+		//	header('Location:'.$_SERVER['REQUEST_URI'].'/../../login.php');
+		//}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -24,72 +31,58 @@
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
+				<a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
 						
-						<a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
+						
 				</div>
 				
 			</div>
 		</div>
 		
-		<div class="container">
-			<header class="header">
-				<h1 class="col-sm-offset-2">New Assignment</h1>
-			</header>
-		</div>
-		
-	 	<div class="container">
-	 		<form action="creationVerification.php" method="post" class="form-horizontal" enctype="multipart/form-data">
-
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Assignment Name: </label>
-				<div class="col-sm-4">
-					<input type="text" name="assignmentName" class="form-control" required>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Max Score: </label>
-				<div class="col-sm-4">
-					<input type="text" name="maxScore" class="form-control" required>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Due Date: </label>
-				<div class="col-sm-4">
-					<input type="datetime-local" name="dueDate" class="form-control" required>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Number of Test Cases: </label>
-				<div class="col-sm-4">
-					<input type="text" name="numTestCases" class="form-control" required>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Test File: </label>
-				<div class="col-sm-4">
-					<input type="file" name="uploaded_file">
-				</div>
-			</div>
-						
-			
-			<div class="col-sm-offset-2">
-				<input name="submitNewAssignment" type="submit" class="btn btn-success" value="Create">
-			</div>
+		<div id="mainDiv">
+		<div class="container-fluid">
+			<b> My Classes:</b>
 			<?php
-                $toEcho = "<input type='hidden' name='courseName' value='{$_GET['course']}'>";
-			echo $toEcho;
+            require_once("../Services/DatabaseProvider.php");
+			$directoryID = "253754205";
+			$conn = DatabaseProvider::getInstance()->getConnectionString();
+			if ($conn->connect_error) {
+				die("Connection failed: " . $conn->connect_error);
+			}
+            $sql = "SELECT * FROM student_classes where directory_ID=$directoryID";
+            $result = $conn->query($sql);
+			echo "(Directory ID: $directoryID)";
+			
+	       ?>
+			<ul class="list-group">
+			<?php
+			
+            if ($result->num_rows > 0) {
+                    // output data of each row
+                while($row = $result->fetch_assoc()) {
+					$className = $row['class_name'];
+					
+					
+					$sql = "SELECT * FROM Assignments where class_name='$className'";
+					$result2 = $conn->query($sql);
+					$number_of_assignments = $result2->num_rows;
+                    echo <<<H
+				<li class="list-group-item"><a href="../Classes/showAssignments.php?course=$className">$className</a> <span class="badge">Assignments: $number_of_assignments</span></li>
+H;
+                }
+            } else {
+                echo "0 results";
+}
 			?>
-			</form>
-	 	</div>
+			</ul>
+		</div>
+            
+        
 	 	
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
