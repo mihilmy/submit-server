@@ -13,7 +13,7 @@ require_once("../Services/DatabaseProvider.php");
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>Amazos</title>
+		<title>Assignment</title>
 
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -32,7 +32,7 @@ require_once("../Services/DatabaseProvider.php");
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="../Classes/showStudentClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
@@ -89,6 +89,24 @@ H;
             } else {
                 echo "0 results";
 }
+
+			 if(!isset($_SESSION['isInstrcutor'])) {
+							echo <<<H
+							<div class="col-sm">
+							<br>
+							
+									<input type="submit" onclick="location.href='#';" class="btn btn-success" value="Submit">
+							</div>
+H;
+			} else {
+				echo <<<H
+				<div class="col-sm">
+				<br>
+				
+						<input type="submit" onclick="location.href='edit.php?assignmentid={$row['assignment_ID']}';" class="btn btn-success" value="Edit">
+				</div>
+H;
+			}
 			?>
 			</ul>
 		</div>

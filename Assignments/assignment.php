@@ -67,7 +67,7 @@
 		}
         
         public function setName($newName) {
-            $conn = DatabaseProvider::getInstance();
+            $conn = DatabaseProvider::getInstance()->getConnectionString();
             $sql = "UPDATE Assignments SET name='$newName' WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {
@@ -89,7 +89,7 @@
 		}
         
         public function setMaxScore($newMax) {
-            $conn = DatabaseProvider::getInstance();
+            $conn = DatabaseProvider::getInstance()->getConnectionString();
             $sql = "UPDATE Assignments SET max_score=$newMax WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {
@@ -112,7 +112,7 @@
 		}
         
         public function setDueDate($newDueDate) {
-            $conn = DatabaseProvider::getInstance();
+            $conn = DatabaseProvider::getInstance()->getConnectionString();
             $sql = "UPDATE Assignments SET due_date='$newDueDate' WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {

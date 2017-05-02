@@ -25,7 +25,7 @@
       <div class="container">
        <!--MOBILE MENU-->
         <div class="navbar-header">
-            <a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
+            <a href="./skeleton.html" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
         </div>
         
           
@@ -103,6 +103,8 @@ if(isset($_POST['submitNewAssignment'])) {
         $newAssignment->setMaxScore($_POST['maxScore']);
 
         echo 'success';
+        sleep(1);
+        header("Location: ../Classes/showAssignments.php?course={$newAssignment->getCourseName()}");  
     } else {
         echo 'fail';
     }
