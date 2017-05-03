@@ -29,19 +29,19 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
-						
-						<a href="../Classes/showStudentClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
+
+						<a href="../Classes/showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
 				</div>
-				
+
 			</div>
 		</div>
-		
+
 		<div class="container">
 			<header class="header">
 				<h1 class="col-sm-offset-2">New Assignment</h1>
 			</header>
 		</div>
-		
+
 	 	<div class="container">
 	 		<form action="creationVerification.php" method="post" class="form-horizontal" enctype="multipart/form-data">
 
@@ -51,7 +51,7 @@
 					<input type="text" name="assignmentName" class="form-control" required>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Max Score: </label>
 				<div class="col-sm-4">
@@ -65,22 +65,22 @@
 					<input type="datetime-local" name="dueDate" class="form-control" required>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Number of Test Cases: </label>
 				<div class="col-sm-4">
 					<input type="text" name="numTestCases" class="form-control" required>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Test File: </label>
 				<div class="col-sm-4">
 					<input type="file" name="uploaded_file">
 				</div>
 			</div>
-						
-			
+
+
 			<div class="col-sm-offset-2">
 				<input name="submitNewAssignment" type="submit" class="btn btn-success" value="Create">
 			</div>
@@ -90,7 +90,7 @@
 			?>
 			</form>
 	 	</div>
-	 	
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->

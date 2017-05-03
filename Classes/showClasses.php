@@ -1,5 +1,17 @@
 <?php
+	require_once("../students/student.php");
 	session_start();
+	$isTeacher = false;
+	if(!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher'])) {
+		header("Location: ../");
+	} else if(isset($_SESSION['current_student'])) {
+		$student = $_SESSION['current_studentArray'];
+		$directoryID = $student['directoryId'];
+	} else {
+		$teacher = $_SESSION['current_teacherArray'];
+		$directoryID = $teacher['directoryId'];
+		$isTeacher = true;
+	}
 		//if(!isset($_SESSION['username'])) {
 		//	header('Location:'.$_SERVER['REQUEST_URI'].'/../../login.php');
 		//}
@@ -37,37 +49,46 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
-						
-						
+
+
 				</div>
-				
+
 			</div>
 		</div>
-		
+
 		<div id="mainDiv">
 		<div class="container-fluid">
 			<b> My Classes:</b>
 			<?php
-            require_once("../Services/DatabaseProvider.php");
-			$directoryID = "253754205";
+      require_once("../Services/DatabaseProvider.php");
+			 //require_once("../students/student.php");
+
 			$conn = DatabaseProvider::getInstance()->getConnectionString();
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			}
+						if($isTeacher) {
+							$sql = "SELECT * FROM classes where teacher_ID=$directoryID";
+							$classKey = 'name';
+						} else {
+
             $sql = "SELECT * FROM student_classes where directory_ID=$directoryID";
+						$classKey = 'class_name';
+					}
+
             $result = $conn->query($sql);
 			echo "(Directory ID: $directoryID)";
-			
+
 	       ?>
 			<ul class="list-group">
 			<?php
-			
+
             if ($result->num_rows > 0) {
                     // output data of each row
                 while($row = $result->fetch_assoc()) {
-					$className = $row['class_name'];
-					
-					
+					$className = $row[$classKey];
+
+
 					$sql = "SELECT * FROM Assignments where class_name='$className'";
 					$result2 = $conn->query($sql);
 					$number_of_assignments = $result2->num_rows;
@@ -81,9 +102,9 @@ H;
 			?>
 			</ul>
 		</div>
-            
-        
-	 	
+
+
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
