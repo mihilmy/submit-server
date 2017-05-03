@@ -25,7 +25,7 @@
       <div class="container">
        <!--MOBILE MENU-->
         <div class="navbar-header">
-            <a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
+            <a href="./skeleton.html" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
         </div>
         
           
@@ -38,9 +38,57 @@ require_once('assignment.php');
 require_once("../Services/DatabaseProvider.php");
 if(isset($_POST['submitNewAssignment'])) {
     $newAssignment = Assignment::createNew($_POST['assignmentName'],$_POST['courseName'], str_replace ("T", " ", $_POST['dueDate']), $_POST['maxScore']);
+      if(isset($_FILES['uploaded_file'])) {
+        // Make sure the file was sent without errors
+        if($_FILES['uploaded_file']['error'] == 0) {
+          // Connect to the database
+          $dbLink = DatabaseProvider::getInstance()->getConnectionString(); 
+          if(mysqli_connect_errno()) {
+            die("MySQL connection failed: ". mysqli_connect_error());
+          }
+       
+          // Gather all required data
+          $name = $dbLink->real_escape_string($_FILES['uploaded_file']['name']);
+          $mime = $dbLink->real_escape_string($_FILES['uploaded_file']['type']);
+          $data = $dbLink->real_escape_string(file_get_contents($_FILES  ['uploaded_file']['tmp_name']));
+          $size = intval($_FILES['uploaded_file']['size']);
+          
+          // Create the SQL query
+          $query = "
+            INSERT INTO `tests` (
+              `test_file_name`, `test_file`, `number_of_test_cases`, `assignment_ID`)
+            VALUES (
+              '{$name}', '{$data}',{$_POST['numTestCases']},{$newAssignment->getId()})";
+        //echo "<pre>{$query}</pre>";;
+          // Execute the query
+          $result = $dbLink->query($query);
+       
+          // Check if it was successfull
+          if($result) {
+            
+          }
+          else {
+            echo 'Error! Failed to insert the file'
+               . "<pre>{$dbLink->error}</pre>";
+          }
+        }
+        else {
+          echo 'No file was uploaded';
+         // echo 'An error accured while the file was being uploaded. '
+          //   . 'Error code: '. intval($_FILES['uploaded_file']['error']);
+        }
+       
+        // Close the mysql connection
+        
+      }
+      else {
+        echo 'Error! A file was not sent!';
+      }
     
     if($newAssignment != null) {
-        echo 'The assignment has been succefully created';
+        echo 'The assignment has been succefully created, do not update the page';
+        sleep(1);
+        header("Location: ../Classes/showAssignments.php?course={$_POST['courseName']}");  
     } else {
         echo 'failed';
     }
@@ -53,7 +101,10 @@ if(isset($_POST['submitNewAssignment'])) {
         $newAssignment->setDueDate(str_replace ("T", " ", $_POST['dueDate']));
         $newAssignment->setName($_POST['assignmentName']);
         $newAssignment->setMaxScore($_POST['maxScore']);
+
         echo 'success';
+        sleep(1);
+        header("Location: ../Classes/showAssignments.php?course={$newAssignment->getCourseName()}");  
     } else {
         echo 'fail';
     }
@@ -69,3 +120,12 @@ if(isset($_POST['submitNewAssignment'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>
 </html>
+<?php 
+
+
+
+?>
+
+
+
+

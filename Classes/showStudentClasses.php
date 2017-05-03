@@ -1,5 +1,4 @@
 <?php
-require_once("../Services/DatabaseProvider.php");
 	session_start();
 		//if(!isset($_SESSION['username'])) {
 		//	header('Location:'.$_SERVER['REQUEST_URI'].'/../../login.php');
@@ -13,7 +12,7 @@ require_once("../Services/DatabaseProvider.php");
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>Assignment</title>
+		<title>Classes</title>
 
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -32,7 +31,7 @@ require_once("../Services/DatabaseProvider.php");
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="../Classes/showStudentClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
@@ -47,66 +46,38 @@ require_once("../Services/DatabaseProvider.php");
 		
 		<div id="mainDiv">
 		<div class="container-fluid">
-			<b> Assignment Info</b>
+			<b> My Classes:</b>
 			<?php
-            
-            $conn = DatabaseProvider::getInstance()->getConnectionString();
+            require_once("../Services/DatabaseProvider.php");
+			$directoryID = "253754205";
+			$conn = DatabaseProvider::getInstance()->getConnectionString();
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			}
-			$className = $_GET['course'];
-            $assignmentid = $_GET['assignmentid'];
-            $sql = "SELECT * FROM Assignments where assignment_ID=$assignmentid";
+            $sql = "SELECT * FROM student_classes where directory_ID=$directoryID";
             $result = $conn->query($sql);
-				echo "(Class: $className)";
+			echo "(Directory ID: $directoryID)";
 			
 	       ?>
 			<ul class="list-group">
-            
 			<?php
-			
 			
             if ($result->num_rows > 0) {
                     // output data of each row
-                $row = $result->fetch_assoc();
-                
+                while($row = $result->fetch_assoc()) {
+					$className = $row['class_name'];
+					
+					
+					$sql = "SELECT * FROM Assignments where class_name='$className'";
+					$result2 = $conn->query($sql);
+					$number_of_assignments = $result2->num_rows;
                     echo <<<H
-                    <li class="list-group-item">
-                        <span class="badge">{$row['name']}</span>
-                            Assignment Name
-                    </li>
-                    <li class="list-group-item">
-                        <span class="badge">{$row['due_date']}</span>
-                           Due Date
-                    </li>
-                    
-                    <li class="list-group-item">
-                        <span class="badge">{$row['max_score']}</span>
-                           maxScore
-                    </li>
+				<li class="list-group-item"><a href="../Classes/showAssignments.php?course=$className">$className</a> <span class="badge">Assignments: $number_of_assignments</span></li>
 H;
-                
+                }
             } else {
                 echo "0 results";
 }
-
-			 if(!isset($_SESSION['isInstrcutor'])) {
-							echo <<<H
-							<div class="col-sm">
-							<br>
-							
-									<input type="submit" onclick="location.href='#';" class="btn btn-success" value="Submit">
-							</div>
-H;
-			} else {
-				echo <<<H
-				<div class="col-sm">
-				<br>
-				
-						<input type="submit" onclick="location.href='edit.php?assignmentid={$row['assignment_ID']}';" class="btn btn-success" value="Edit">
-				</div>
-H;
-			}
 			?>
 			</ul>
 		</div>

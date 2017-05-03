@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>Amazos</title>
+		<title>New Assignment</title>
 
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -30,7 +30,7 @@
 								<span class="icon-bar"></span>
 						</button>
 						
-						<a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
+						<a href="../Classes/showStudentClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
 				</div>
 				
 			</div>
@@ -43,7 +43,7 @@
 		</div>
 		
 	 	<div class="container">
-	 		<form action="creationVerification.php" method="post" class="form-horizontal">
+	 		<form action="creationVerification.php" method="post" class="form-horizontal" enctype="multipart/form-data">
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Assignment Name: </label>
@@ -63,6 +63,20 @@
 				<label class="col-sm-2 control-label">Due Date: </label>
 				<div class="col-sm-4">
 					<input type="datetime-local" name="dueDate" class="form-control" required>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Number of Test Cases: </label>
+				<div class="col-sm-4">
+					<input type="text" name="numTestCases" class="form-control" required>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Test File: </label>
+				<div class="col-sm-4">
+					<input type="file" name="uploaded_file">
 				</div>
 			</div>
 						

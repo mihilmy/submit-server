@@ -38,10 +38,10 @@
 
 			if ($conn->query($sql) === TRUE) {
 				$instance->Id = $conn->insert_id;
-				$conn->close();
+				
                 return $instance;
 			} else {
-				$conn->close();
+				
 				return null;
 			}
 		}
@@ -67,15 +67,15 @@
 		}
         
         public function setName($newName) {
-            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
+            $conn = DatabaseProvider::getInstance()->getConnectionString();
             $sql = "UPDATE Assignments SET name='$newName' WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->name = $newName;
-				$conn->close();
+				
                 return true;
             } else {
-				$conn->close();
+				
                 return false;
             }
 		}
@@ -89,12 +89,11 @@
 		}
         
         public function setMaxScore($newMax) {
-            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
+            $conn = DatabaseProvider::getInstance()->getConnectionString();
             $sql = "UPDATE Assignments SET max_score=$newMax WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->maxScore = $newMax;
-				$conn->close();
                 return true;
             } else {
                 return false;
@@ -113,15 +112,15 @@
 		}
         
         public function setDueDate($newDueDate) {
-            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
+            $conn = DatabaseProvider::getInstance()->getConnectionString();
             $sql = "UPDATE Assignments SET due_date='$newDueDate' WHERE assignment_ID=$this->Id";
 
             if ($conn->query($sql) === TRUE) {
                 $this->dueDate = new DateTime($newDueDate);
-				$conn->close();	
+				
                 return true;
             } else {
-				$conn->close();
+				
                 return false;
             }
         }
