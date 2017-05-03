@@ -16,6 +16,8 @@
 			$this->password = "amazos2017";
 			$this->database = "submit_server";
 			$this->conn = mysqli_connect($this->servername, $this->username, $this->password, $this->database);
+			
+			
 		}
 
 		public function getConnectionString(){
@@ -40,6 +42,6 @@
 
 	}
 
-
+	$db = new DatabaseProvider();
 
 ?>

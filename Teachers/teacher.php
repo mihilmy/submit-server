@@ -1,14 +1,13 @@
 <?php 
 	class Teacher {
 		private $name;
-		private $directory_id;
+		private $directoryId;
 		private $email;
 		
-		public function __contruct($name,$directory_id,$email, $password) {
+		public function __contruct($name,$email, $directoryId) {
 			$this->name = $name;
 			$this->directory_id = $directory_id;
 			$this->email = $email;
-			$this->password = $password;
 		}
 		
 		public function getName() {
@@ -16,7 +15,7 @@
 		}
 		
 		public function getDIrectoryID() {
-			return $this->SSN;	
+			return $this->directoryId;	
 		}
 		
 		public function getEmail() {

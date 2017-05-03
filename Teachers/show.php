@@ -1,0 +1,1 @@
+This is a teacher show page.
