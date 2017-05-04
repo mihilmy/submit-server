@@ -35,6 +35,19 @@ if($result->num_rows == 0) {
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
+	<script>
+		function validateform(){
+		var name=document.getElementById('name').value;
+		var max_score=document.getElementById('score').value;
+		var due_date= document.getElementById('date').value;
+		var test_cases= document.getElementById('test_cases').value;
+
+		if (isNaN(test_cases) || isNaN(max_score) || test_cases === '' || max_score ==='') {
+  		alert("From is invalid");
+  		return false;
+			}
+}
+</script>
 	<body>
 		<!--NAVIGATION-->
 		<div class="navbar navbar-default navbar-fixed-top nav-color"  role="navigation">
@@ -60,40 +73,40 @@ if($result->num_rows == 0) {
 		</div>
 
 	 	<div class="container">
-	 		<form action="creationVerification.php" method="post" class="form-horizontal" enctype="multipart/form-data">
+	 		<form name="newAssignment" onsubmit="return validateform()" action="creationVerification.php" method="post" class="form-horizontal" enctype="multipart/form-data">
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Assignment Name: </label>
 				<div class="col-sm-4">
-					<input type="text" name="assignmentName" class="form-control" required>
+					<input type="text" name="assignmentName" id="name" class="form-control" required>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Max Score: </label>
 				<div class="col-sm-4">
-					<input type="text" name="maxScore" class="form-control" required>
+					<input type="text" name="maxScore" id="score" class="form-control" required>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Due Date: </label>
 				<div class="col-sm-4">
-					<input type="datetime-local" name="dueDate" class="form-control" required>
+					<input type="datetime-local" name="dueDate" id="date" class="form-control" required>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Number of Test Cases: </label>
 				<div class="col-sm-4">
-					<input type="text" name="numTestCases" class="form-control" required>
+					<input id="test_cases" type="text" name="numTestCases" class="form-control" required>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Test File: </label>
 				<div class="col-sm-4">
-					<input type="file" name="uploaded_file">
+					<input type="file" name="uploaded_file" required>
 				</div>
 			</div>
 

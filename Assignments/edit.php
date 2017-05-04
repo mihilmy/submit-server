@@ -34,6 +34,19 @@ if($result->num_rows == 0) {
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
+	<script>
+		function validateform(){
+		var name=document.getElementById('name').value;
+		var max_score=document.getElementById('score').value;
+		//var due_date= document.getElementById('date').value;
+		//var test_cases= document.getElementById('test_cases').value;
+
+		if ( isNaN(max_score) || max_score ==='') {
+			alert("From is invalid");
+			return false;
+			}
+}
+</script>
 	<body>
 		<!--NAVIGATION-->
 		<div class="navbar navbar-default navbar-fixed-top nav-color"  role="navigation">
@@ -69,14 +82,14 @@ if($result->num_rows == 0) {
 
 			?>
 	 	<div class="container">
-	 		<form action="creationVerification.php" method="post" class="form-horizontal">
+	 		<form action="creationVerification.php" method="post" class="form-horizontal" onsubmit="return validateform()">
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Assignment Name: </label>
 				<div class="col-sm-4">
 				<?php
 				$san = $assignment->getName();
-					echo "<input type='text' name='assignmentName' class='form-control' value='{$san}'required>"
+					echo "<input id='name' type='text' name='assignmentName' class='form-control' value='{$san}'required>"
 				?>
 				</div>
 			</div>
@@ -86,7 +99,7 @@ if($result->num_rows == 0) {
 				<div class="col-sm-4">
 					<?php
 					$san = $assignment->getMaxScore();
-						echo "<input type='text' name='maxScore' class='form-control' value='{$san}'required>"
+						echo "<input id='score' type='text' name='maxScore' class='form-control' value='{$san}'required>"
 					?>
 				</div>
 			</div>
