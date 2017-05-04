@@ -1,5 +1,6 @@
 <?php
 	require_once("../students/student.php");
+	require_once("../Teachers/teacher.php");
 	session_start();
 	$isTeacher = false;
 	if(!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher'])) {
@@ -43,7 +44,7 @@
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>

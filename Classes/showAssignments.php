@@ -1,12 +1,18 @@
 <?php
 	require_once("../Services/DatabaseProvider.php");
 	session_start();
-	if(!isset($_GET['course'])) {
+	if(!isset($_GET['course']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
 		header("Location: ./showClasses.php");
 	}
 	$conn = DatabaseProvider::getInstance()->getConnectionString();
-	$sql = "SELECT * FROM student_classes where directory_ID='{$_SESSION['current_studentArray']['directoryId']}' and
-	class_name='{$_GET['course']}'";
+
+	if(isset($_SESSION['current_teacher'])) {
+		$sql = "SELECT * FROM classes where teacher_ID='{$_SESSION['current_teacherArray']['directoryId']}' and
+		name='{$_GET['course']}'";
+	} else {
+		$sql = "SELECT * FROM student_classes where directory_ID='{$_SESSION['current_studentArray']['directoryId']}' and
+		class_name='{$_GET['course']}'";
+	}
 	$result = $conn->query($sql);
 	 if($result->num_rows == 0 && !isset($_SESSION['current_teacher'])) {
 		 header("Location: ./showClasses.php");
