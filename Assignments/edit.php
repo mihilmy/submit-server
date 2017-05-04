@@ -1,3 +1,19 @@
+<?php
+require_once("../Services/DatabaseProvider.php");
+session_start();
+if(!isset($_SESSION['current_teacher']) || !isset($_GET['assignmentid'])) {
+	header("Location: ../Classes/showClasses.php");
+}
+$conn = DatabaseProvider::getInstance()->getConnectionString();
+$sql = "SELECT * FROM assignments INNER JOIN classes ON assignments.class_name = classes.name where teacher_ID={$_SESSION['current_teacherArray']['directoryId']} and
+assignment_ID={$_GET['assignmentid']}";
+$result = $conn->query($sql);
+if($result->num_rows == 0) {
+	//echo $sql;
+	header("Location: ../Classes/showClasses.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -18,6 +34,19 @@
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
+	<script>
+		function validateform(){
+		var name=document.getElementById('name').value;
+		var max_score=document.getElementById('score').value;
+		//var due_date= document.getElementById('date').value;
+		//var test_cases= document.getElementById('test_cases').value;
+
+		if ( isNaN(max_score) || max_score ==='') {
+			alert("From is invalid");
+			return false;
+			}
+}
+</script>
 	<body>
 		<!--NAVIGATION-->
 		<div class="navbar navbar-default navbar-fixed-top nav-color"  role="navigation">
@@ -29,13 +58,13 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
-						
-						<a href="../Classes/showStudentClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
+
+						<a href="../Classes/showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
 				</div>
-				
+
 			</div>
 		</div>
-		
+
 		<div class="container">
 			<header class="header">
 				<h1 class="col-sm-offset-2">Edit Assignment</h1>
@@ -49,28 +78,28 @@
 				$sql = "SELECT * FROM Assignments where assignment_ID=$assignmentid";
 				$result = $conn->query($sql);
 				$assignment = Assignment::parseDbResult($result->fetch_assoc());
-				
-			
+
+
 			?>
 	 	<div class="container">
-	 		<form action="creationVerification.php" method="post" class="form-horizontal">
+	 		<form action="creationVerification.php" method="post" class="form-horizontal" onsubmit="return validateform()">
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Assignment Name: </label>
 				<div class="col-sm-4">
 				<?php
 				$san = $assignment->getName();
-					echo "<input type='text' name='assignmentName' class='form-control' value='{$san}'required>"
+					echo "<input id='name' type='text' name='assignmentName' class='form-control' value='{$san}'required>"
 				?>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Max Score: </label>
 				<div class="col-sm-4">
 					<?php
 					$san = $assignment->getMaxScore();
-						echo "<input type='text' name='maxScore' class='form-control' value='{$san}'required>"
+						echo "<input id='score' type='text' name='maxScore' class='form-control' value='{$san}'required>"
 					?>
 				</div>
 			</div>
@@ -84,19 +113,19 @@
 				?>
 				</div>
 			</div>
-					
-			
+
+
 			<div class="col-sm-offset-2">
 				<input name="submitEditAssignment" type="submit" class="btn btn-success" value="Submit Changes">
 			</div>
-			
+
 			<?php
                 $toEcho = "<input type='hidden' name='assignmentid' value='{$_GET['assignmentid']}'>";
 			echo $toEcho;
 			?>
 			</form>
 	 	</div>
-	 	
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->

@@ -1,9 +1,25 @@
 <?php
 require_once("../Services/DatabaseProvider.php");
 	session_start();
-		//if(!isset($_SESSION['username'])) {
-		//	header('Location:'.$_SERVER['REQUEST_URI'].'/../../login.php');
-		//}
+	if(!isset($_GET['assignmentid']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
+		header("Location: ./showClasses.php");
+	}
+	$conn = DatabaseProvider::getInstance()->getConnectionString();
+	if(isset($_SESSION['current_teacher'])) {
+		$sql = "SELECT * FROM assignments INNER JOIN classes ON assignments.class_name = classes.name where teacher_ID={$_SESSION['current_teacherArray']['directoryId']} and
+		assignment_ID={$_GET['assignmentid']}";
+	} else {
+		$sql = "SELECT * FROM assignments NATURAL JOIN student_classes where directory_ID='{$_SESSION['current_studentArray']['directoryId']}' and
+		assignment_ID='{$_GET['assignmentid']}'";
+	}
+	
+	$result = $conn->query($sql);
+	 if($result->num_rows == 0 && !isset($_SESSION['current_teacher'])) {
+		 header("Location: ../Classes/showClasses.php");
+	 } else {
+		 $row = $result->fetch_assoc();
+		 $className = $row['class_name'];
+	 }
 ?>
 
 <!DOCTYPE html>
@@ -32,69 +48,69 @@ require_once("../Services/DatabaseProvider.php");
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="../Classes/showStudentClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="../Classes/showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
-						
-						
+
+
 				</div>
-				
+
 			</div>
 		</div>
-		
+
 		<div id="mainDiv">
 		<div class="container-fluid">
 			<b> Assignment Info</b>
 			<?php
-            
-            $conn = DatabaseProvider::getInstance()->getConnectionString();
+
+
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			}
-			$className = $_GET['course'];
+			//$className = $_GET['course'];
             $assignmentid = $_GET['assignmentid'];
             $sql = "SELECT * FROM Assignments where assignment_ID=$assignmentid";
             $result = $conn->query($sql);
 				echo "(Class: $className)";
-			
+
 	       ?>
 			<ul class="list-group">
-            
+
 			<?php
-			
-			
+
+
             if ($result->num_rows > 0) {
                     // output data of each row
                 $row = $result->fetch_assoc();
-                
+
                     echo <<<H
                     <li class="list-group-item">
-                        <span class="badge">{$row['name']}</span>
+                        <span class="badge badge-info">{$row['name']}</span>
                             Assignment Name
                     </li>
                     <li class="list-group-item">
-                        <span class="badge">{$row['due_date']}</span>
+                        <span class="badge badge-info">{$row['due_date']}</span>
                            Due Date
                     </li>
-                    
+
                     <li class="list-group-item">
-                        <span class="badge">{$row['max_score']}</span>
+                        <span class="badge badge-info">{$row['max_score']}</span>
                            maxScore
                     </li>
 H;
-                
+
             } else {
                 echo "0 results";
 }
 
-			 if(!isset($_SESSION['isInstrcutor'])) {
+			 if(!isset($_SESSION['current_teacher']))  {
 							echo <<<H
 							<div class="col-sm">
 							<br>
-							
+
 									<input type="submit" onclick="location.href='#';" class="btn btn-success" value="Submit">
 							</div>
 H;
@@ -102,7 +118,7 @@ H;
 				echo <<<H
 				<div class="col-sm">
 				<br>
-				
+
 						<input type="submit" onclick="location.href='edit.php?assignmentid={$row['assignment_ID']}';" class="btn btn-success" value="Edit">
 				</div>
 H;
@@ -110,9 +126,9 @@ H;
 			?>
 			</ul>
 		</div>
-            
-        
-	 	
+
+
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->

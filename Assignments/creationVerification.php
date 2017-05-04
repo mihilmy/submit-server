@@ -27,11 +27,11 @@
         <div class="navbar-header">
             <a href="./skeleton.html" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
         </div>
-        
-          
+
+
       </div>
     </div>
-   	
+
     <div id="mainDiv">
     <?php
 require_once('assignment.php');
@@ -42,17 +42,17 @@ if(isset($_POST['submitNewAssignment'])) {
         // Make sure the file was sent without errors
         if($_FILES['uploaded_file']['error'] == 0) {
           // Connect to the database
-          $dbLink = DatabaseProvider::getInstance()->getConnectionString(); 
+          $dbLink = DatabaseProvider::getInstance()->getConnectionString();
           if(mysqli_connect_errno()) {
             die("MySQL connection failed: ". mysqli_connect_error());
           }
-       
+
           // Gather all required data
           $name = $dbLink->real_escape_string($_FILES['uploaded_file']['name']);
           $mime = $dbLink->real_escape_string($_FILES['uploaded_file']['type']);
           $data = $dbLink->real_escape_string(file_get_contents($_FILES  ['uploaded_file']['tmp_name']));
           $size = intval($_FILES['uploaded_file']['size']);
-          
+
           // Create the SQL query
           $query = "
             INSERT INTO `tests` (
@@ -62,10 +62,10 @@ if(isset($_POST['submitNewAssignment'])) {
         //echo "<pre>{$query}</pre>";;
           // Execute the query
           $result = $dbLink->query($query);
-       
+
           // Check if it was successfull
           if($result) {
-            
+
           }
           else {
             echo 'Error! Failed to insert the file'
@@ -77,14 +77,14 @@ if(isset($_POST['submitNewAssignment'])) {
          // echo 'An error accured while the file was being uploaded. '
           //   . 'Error code: '. intval($_FILES['uploaded_file']['error']);
         }
-       
+
         // Close the mysql connection
-        
+
       }
       else {
         echo 'Error! A file was not sent!';
       }
-    
+
     if($newAssignment != null) {
         echo 'The assignment has been succefully created, do not update the page';
         sleep(1);
@@ -104,7 +104,7 @@ if(isset($_POST['submitNewAssignment'])) {
 
         echo 'success';
         sleep(1);
-        header("Location: ../Classes/showAssignments.php?course={$newAssignment->getCourseName()}");  
+        header("Location: ../Classes/showAssignments.php?course={$newAssignment->getCourseName()}");
     } else {
         echo 'fail';
     }
@@ -112,7 +112,7 @@ if(isset($_POST['submitNewAssignment'])) {
 }
 
 ?>
-  
+
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -120,12 +120,8 @@ if(isset($_POST['submitNewAssignment'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>
 </html>
-<?php 
+<?php
 
 
 
 ?>
-
-
-
-

@@ -1,8 +1,25 @@
 <?php
+	require_once("../Services/DatabaseProvider.php");
 	session_start();
-		//if(!isset($_SESSION['username'])) {
-		//	header('Location:'.$_SERVER['REQUEST_URI'].'/../../login.php');
-		//}
+	if(!isset($_GET['course']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
+		header("Location: ./showClasses.php");
+	}
+	$conn = DatabaseProvider::getInstance()->getConnectionString();
+
+	if(isset($_SESSION['current_teacher'])) {
+		$sql = "SELECT * FROM classes where teacher_ID='{$_SESSION['current_teacherArray']['directoryId']}' and
+		name='{$_GET['course']}'";
+	} else {
+		$sql = "SELECT * FROM student_classes where directory_ID='{$_SESSION['current_studentArray']['directoryId']}' and
+		class_name='{$_GET['course']}'";
+	}
+	$result = $conn->query($sql);
+	 if($result->num_rows == 0 && !isset($_SESSION['current_teacher'])) {
+		 header("Location: ./showClasses.php");
+	 }
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -31,25 +48,25 @@
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="showStudentClasses.php"  class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="showClasses.php"  class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
-						
-						
+
+
 				</div>
-				
+
 			</div>
 		</div>
-		
+
 		<div id="mainDiv">
 		<div class="container-fluid">
 			<b> Current Assignments</b>
 			<?php
-            
-            $conn = new mysqli("localhost", "amazos", "amazos2017", "submit_server");
+
+
 			if ($conn->connect_error) {
 				die("Connection failed: " . $conn->connect_error);
 			}
@@ -57,40 +74,40 @@
             $sql = "SELECT * FROM Assignments where class_name='$className'";
             $result = $conn->query($sql);
 				echo "(Class: $className)";
-			
+
 	       ?>
 			<ul class="list-group">
 			<?php
-			
+
             if ($result->num_rows > 0) {
                     // output data of each row
                 while($row = $result->fetch_assoc()) {
                     echo <<<H
-				<li class="list-group-item"><a href="../Assignments/show.php?course=$className&assignmentid={$row['assignment_ID']}">{$row['name']}</a> <span class="label label-warning">Due Date: {$row['due_date']}</span></li>
+				<li class="list-group-item"><a href="../Assignments/show.php?assignmentid={$row['assignment_ID']}">{$row['name']}</a> <span style="float:right;" class="label label-warning">Due Date: {$row['due_date']}</span></li>
 H;
                 }
             } else {
                 echo "No assignments";}
-			$_SESSION['isInstrcutor'] = true;
-			if(isset($_SESSION['isInstrcutor'])) {
+
+			if(isset($_SESSION['current_teacher'])) {
 				echo <<<H
-				
+
 				<div class="col-sm">
 				<br>
-				
+
 						<input type="submit" onclick="location.href='../Assignments/new.php?course={$_GET['course']}';" class="btn btn-success" value="Create">
 				</div>
-				
+
 H;
 			}
 			?>
-			
+
 
 			</ul>
 		</div>
-            
-        
-	 	
+
+
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->

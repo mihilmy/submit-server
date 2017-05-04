@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    <div id="mainDiv" class="container">
     	<header>
     		<h1><u>Log In</u></h1>
     	</header>
