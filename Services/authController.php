@@ -99,6 +99,7 @@ QUERY;
 		$directoryId = $array['directory_ID'];
 
 		if($isStudent) {
+			
 			$student = new Student($name,$email,$directoryId);
 			$_SESSION['current_student'] = $student;
 			header("Location: ../Students/show.php");

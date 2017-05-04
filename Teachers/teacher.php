@@ -4,9 +4,9 @@
 		private $directoryId;
 		private $email;
 		
-		public function __contruct($name,$email, $directoryId) {
+		public function __construct($name,$email,$directoryId) {
 			$this->name = $name;
-			$this->directory_id = $directory_id;
+			$this->directoryId = $directoryId;
 			$this->email = $email;
 		}
 		
@@ -14,7 +14,7 @@
 			return $this->name;
 		}
 		
-		public function getDIrectoryID() {
+		public function getDirectoryId() {
 			return $this->directoryId;	
 		}
 		
