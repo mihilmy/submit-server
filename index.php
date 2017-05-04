@@ -2,7 +2,7 @@
 session_start();
 if(isset($_SESSION['current_teacher'])) {
   header("Location: Teachers/show.php");
-} elseif ($_SESSION['current_student']) {
+} elseif (isset($_SESSION['current_student'])) {
   header("Location: Students/show.php");
 }
 ?>
