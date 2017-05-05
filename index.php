@@ -1,4 +1,11 @@
-<?php require_once("Services/utils.php"); ?>
+<?php require_once("Services/utils.php");
+session_start();
+if(isset($_SESSION['current_teacher'])) {
+  header("Location: Teachers/show.php");
+} elseif (isset($_SESSION['current_student'])) {
+  header("Location: Students/show.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +27,7 @@
     <![endif]-->
   </head>
   <body>
-   
+
     <!--NAVIGATION-->
     <div class="navbar navbar-default navbar-fixed-top nav-color"  role="navigation">
       <div class="container">
@@ -31,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            
+
             <a href="" class="navbar-brand"><img src="img/logo.png" alt="UMD"></a>
         </div>
       </div>
@@ -40,14 +47,14 @@
     	<header>
     		<h1><u>Log In</u></h1>
     	</header>
-	
+
     <?php $message = getMessage(); if ($message) { ?>
 		<div class="alert alert-warning alert-dismissible" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			  <?php echo $message; ?>
 		</div>
    	<?php } ?>
-    	
+
 		<form action="Services/authController.php" method="post" class="form-horizontal">
 
 			<div class="form-group">
@@ -66,10 +73,10 @@
 
 			<button type="submit" class="col-sm-offset-1 btn btn-primary">Log In</button>
 		</form>
-		
+
   </div>
-    
-   	
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
