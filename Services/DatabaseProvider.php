@@ -42,6 +42,4 @@
 
 	}
 
-	$db = new DatabaseProvider();
-
 ?>

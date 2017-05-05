@@ -1,11 +1,13 @@
 <?php
 require_once("../Services/DatabaseProvider.php");
+require_once("../students/student.php");
+require_once("../Teachers/teacher.php");
 session_start();
 if(!isset($_SESSION['current_teacher']) || !isset($_GET['course'])) {
 	header("Location: ../Classes/showClasses.php");
 }
 $conn = DatabaseProvider::getInstance()->getConnectionString();
-$sql = "SELECT * FROM classes where teacher_ID='{$_SESSION['current_teacherArray']['directoryId']}' and
+$sql = "SELECT * FROM classes where teacher_ID='{$_SESSION['current_teacher']->getDirectoryId()}' and
 name='{$_GET['course']}'";
 $result = $conn->query($sql);
 echo $sql;

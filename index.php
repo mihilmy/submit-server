@@ -1,11 +1,4 @@
-<?php require_once("Services/utils.php");
-//session_start();
-if(isset($_SESSION['current_teacher'])) {
-  header("Location: Teachers/show.php");
-} elseif (isset($_SESSION['current_student'])) {
-  header("Location: Students/show.php");
-}
-?>
+<?php require_once("Services/utils.php"); redirectIfLoggedIn(); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -43,7 +36,7 @@ if(isset($_SESSION['current_teacher'])) {
         </div>
       </div>
     </div>
-    <div id="mainDiv" class="container">
+    <div class="container">
     	<header>
     		<h1><u>Log In</u></h1>
     	</header>

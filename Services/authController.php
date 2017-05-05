@@ -3,15 +3,15 @@
 	require_once("../Teachers/teacher.php");
 	require_once("DatabaseProvider.php");
 	session_start();
-
-	login();
+	
+	$conn = DatabaseProvider::getInstance()->getConnectionString();
+	login($conn);
 
 	/*
 	Function handles student login.
 	On success it returns the result. On failure it returns null. If no data exists it returns false.
 	*/
-	function student_login() {
-		global $db;
+	function student_login($conn) {
 		$directoryId = trim($_POST['directoryId']);
 		$password = trim($_POST['password']);
 
@@ -21,8 +21,8 @@
 QUERY;
 
 
-		$result = mysqli_query($db->getConnectionString(), $student_query);
-
+		$result = mysqli_query($conn, $student_query);
+		
 		if($result) {
 			$numberOfRows = mysqli_num_rows($result);
 
@@ -42,8 +42,7 @@ QUERY;
 	Function handles teacher login.
 	On success it returns the result. On failure it returns null. If no data exists it returns false.
 	*/
-	function teacher_login() {
-		global $db;
+	function teacher_login($conn) {
 		$directoryId = trim($_POST['directoryId']);
 		$password = trim($_POST['password']);
 
@@ -52,7 +51,7 @@ QUERY;
 		WHERE DIRECTORY_ID = $directoryId AND PASSWORD = '$password';
 QUERY;
 
-		$result = mysqli_query($db->getConnectionString(), $teacher_query);
+		$result = mysqli_query($conn, $teacher_query);
 
 		if($result) {
 			$numberOfRows = mysqli_num_rows($result);
@@ -70,20 +69,19 @@ QUERY;
 	/*
 	This is a wrapper to handle both student and teacher log in.
 	*/
-	function login() {
-		$result = student_login();
+	function login($conn) {
+		$result = student_login($conn);
 		$isStudent = true;
 
 		if ($result === null) {
-
-			$_SESSION['message'] = "Fetching records failed.".mysqli_error($_SESSION['db']);
+			$_SESSION['message'] = "Fetching records failed.".mysqli_error($conn);
 			header("Location: ../");
 			return false;
 		}
 
 		if ($result === false) {
 			$isStudent = false;
-			$result = teacher_login();
+			$result = teacher_login($conn);
 		}
 
 		if ($result === false) {
@@ -97,21 +95,14 @@ QUERY;
 		$name = $array['name'];
 		$email = $array['email'];
 		$directoryId = $array['directory_ID'];
-		/* what I added here is a dictionary (hashmap) instead of the custom Student & Teacher
-		// classes. The reason is becuase objects are not stored as they are. Thet are seralized.
-		*/
+		
 		if($isStudent) {
-			
 			$student = new Student($name,$email,$directoryId);
-			$studentArray = array('name'=>$name,'directoryId'=>$directoryId,'email'=> $email);
 			$_SESSION['current_student'] = $student;
-			$_SESSION['current_studentArray'] = $studentArray;
 			header("Location: ../Students/show.php");
 		} else {
 			$teacher = new Teacher($name,$email,$directoryId);
-			$teacherArray = array('name'=>$name,'directoryId'=>$directoryId,'email'=> $email);
 			$_SESSION['current_teacher'] = $teacher;
-			$_SESSION['current_teacherArray'] = $teacherArray;
 			header("Location: ../Teachers/show.php");
 		}
 

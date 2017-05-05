@@ -1,11 +1,13 @@
 <?php
 require_once("../Services/DatabaseProvider.php");
+require_once("../students/student.php");
+require_once("../Teachers/teacher.php");
 session_start();
 if(!isset($_SESSION['current_teacher']) || !isset($_GET['assignmentid'])) {
 	header("Location: ../Classes/showClasses.php");
 }
 $conn = DatabaseProvider::getInstance()->getConnectionString();
-$sql = "SELECT * FROM assignments INNER JOIN classes ON assignments.class_name = classes.name where teacher_ID={$_SESSION['current_teacherArray']['directoryId']} and
+$sql = "SELECT * FROM assignments INNER JOIN classes ON assignments.class_name = classes.name where teacher_ID={$_SESSION['current_teacher']->getDirectoryId()} and
 assignment_ID={$_GET['assignmentid']}";
 $result = $conn->query($sql);
 if($result->num_rows == 0) {
