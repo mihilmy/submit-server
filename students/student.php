@@ -7,7 +7,7 @@
 		public function __construct($name,$email,$directoryId) {
 			$this->name = $name;
 			$this->directoryId = $directoryId;
-			$this->email = $name;
+			$this->email = $email;
 		}
 
 		public function getName() {

@@ -45,17 +45,17 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<td>Directory ID</td>
-						<td>Name</td>
-						<td>Email</td>
+						<th>Name</th>
+						<th>Directory ID</th>
+						<th>Email</th>
 					</tr>
 				</thead>
 				
 				<tbody>
 					<?php $students = index(); foreach($students as $student) { ?>
 					<tr>
-						<td><?php echo $student["directory_ID"]; ?></td>
 						<td><?php echo $student["name"]; ?></td>
+						<td><?php echo $student["directory_ID"]; ?></td>
 						<td><?php echo $student["email"]; ?></td>
 					</tr>
 					<?php } ?>
