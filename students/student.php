@@ -1,4 +1,4 @@
-<?php 
+<?php
 	class Student {
 		private $name;
 		private $directoryId;
@@ -9,15 +9,15 @@
 			$this->directoryId = $directoryId;
 			$this->email = $name;
 		}
-		
+
 		public function getName() {
 			return $this->name;
 		}
-		
+
 		public function getDirectoryId() {
-			return $this->directoryId;	
+			return $this->directoryId;
 		}
-		
+
 		public function getEmail() {
 			return $this->email;
 		}
