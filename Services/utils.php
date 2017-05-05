@@ -10,4 +10,13 @@
 		
 		return false;
 	}
+
+	function redirectIfLoggedIn() {
+		
+		if(isset($_SESSION['current_teacher'])) {
+			header("Location: Teachers/show.php");
+		} elseif (isset($_SESSION['current_student'])) {
+			header("Location: Students/show.php");
+		}
+	}
 ?>
