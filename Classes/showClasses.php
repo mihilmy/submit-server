@@ -6,11 +6,11 @@
 	if(!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher'])) {
 		header("Location: ../");
 	} else if(isset($_SESSION['current_student'])) {
-		$student = $_SESSION['current_studentArray'];
-		$directoryID = $student['directoryId'];
+		$student = $_SESSION['current_student'];
+		$directoryID = $student->getDirectoryId();
 	} else {
-		$teacher = $_SESSION['current_teacherArray'];
-		$directoryID = $teacher['directoryId'];
+		$teacher = $_SESSION['current_teacher'];
+		$directoryID = $teacher->getDirectoryId();
 		$isTeacher = true;
 	}
 		//if(!isset($_SESSION['username'])) {

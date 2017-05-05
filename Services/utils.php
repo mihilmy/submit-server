@@ -1,5 +1,5 @@
 <?php
-	session_start(); 
+	session_start();
 
 	function getMessage() {
 		if(isset($_SESSION['message'])){
@@ -7,12 +7,12 @@
 			unset($_SESSION['message']);
 			return $message;
 		}
-		
+
 		return false;
 	}
 
 	function redirectIfLoggedIn() {
-		
+
 		if(isset($_SESSION['current_teacher'])) {
 			header("Location: Teachers/show.php");
 		} elseif (isset($_SESSION['current_student'])) {

@@ -1,18 +1,20 @@
 <?php
 require_once("../Services/DatabaseProvider.php");
+require_once("../students/student.php");
+require_once("../Teachers/teacher.php");
 	session_start();
 	if(!isset($_GET['assignmentid']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
 		header("Location: ./showClasses.php");
 	}
 	$conn = DatabaseProvider::getInstance()->getConnectionString();
 	if(isset($_SESSION['current_teacher'])) {
-		$sql = "SELECT * FROM assignments INNER JOIN classes ON assignments.class_name = classes.name where teacher_ID={$_SESSION['current_teacherArray']['directoryId']} and
+		$sql = "SELECT * FROM assignments INNER JOIN classes ON assignments.class_name = classes.name where teacher_ID={$_SESSION['current_teacher']->getDirectoryId()} and
 		assignment_ID={$_GET['assignmentid']}";
 	} else {
-		$sql = "SELECT * FROM assignments NATURAL JOIN student_classes where directory_ID='{$_SESSION['current_studentArray']['directoryId']}' and
+		$sql = "SELECT * FROM assignments NATURAL JOIN student_classes where directory_ID='{$_SESSION['current_student']->getDirectoryId()}' and
 		assignment_ID='{$_GET['assignmentid']}'";
 	}
-	
+
 	$result = $conn->query($sql);
 	 if($result->num_rows == 0 && !isset($_SESSION['current_teacher'])) {
 		 header("Location: ../Classes/showClasses.php");
@@ -111,7 +113,7 @@ H;
 							<div class="col-sm">
 							<br>
 
-									<input type="submit" onclick="location.href='#';" class="btn btn-success" value="Submit">
+									<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
 							</div>
 H;
 			} else {
