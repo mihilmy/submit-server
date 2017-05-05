@@ -1,5 +1,5 @@
 <?php require_once("Services/utils.php");
-session_start();
+//session_start();
 if(isset($_SESSION['current_teacher'])) {
   header("Location: Teachers/show.php");
 } elseif (isset($_SESSION['current_student'])) {

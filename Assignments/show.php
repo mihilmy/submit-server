@@ -12,7 +12,7 @@ require_once("../Services/DatabaseProvider.php");
 		$sql = "SELECT * FROM assignments NATURAL JOIN student_classes where directory_ID='{$_SESSION['current_studentArray']['directoryId']}' and
 		assignment_ID='{$_GET['assignmentid']}'";
 	}
-	
+
 	$result = $conn->query($sql);
 	 if($result->num_rows == 0 && !isset($_SESSION['current_teacher'])) {
 		 header("Location: ../Classes/showClasses.php");
@@ -111,7 +111,7 @@ H;
 							<div class="col-sm">
 							<br>
 
-									<input type="submit" onclick="location.href='#';" class="btn btn-success" value="Submit">
+									<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
 							</div>
 H;
 			} else {
