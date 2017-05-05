@@ -12,7 +12,7 @@
 		$sql = "SELECT * FROM classes where teacher_ID='{$_SESSION['current_teacher']->getDirectoryId()}' and
 		name='{$_GET['course']}'";
 	} else {
-		$sql = "SELECT * FROM student_classes where directory_ID='{$_SESSION['current_studentArray']->getDirectoryId()}' and
+		$sql = "SELECT * FROM student_classes where directory_ID='{$_SESSION['current_student']->getDirectoryId()}' and
 		class_name='{$_GET['course']}'";
 	}
 	$result = $conn->query($sql);
