@@ -58,8 +58,9 @@
     	
     	<div class="row">
     		<ul>
-    			<?php $classes = show(); foreach($classes as $class) { ?>
-    			<li><a href=""><?php echo $class ?></a></li>
+    			<?php $classes = show(); foreach($classes as $class) { 
+					$url = "\"../Classes/showAssignments.php?course=".$class."\""; ?>
+    			<li><a href=<?php echo $url; ?> > <?php echo $class ?></a></li>
     			<?php } ?>
     		</ul>
     	</div>
