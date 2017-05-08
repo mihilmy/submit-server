@@ -11,34 +11,6 @@
 
 	$conn = DatabaseProvider::getInstance()->getConnectionString();
 
-
-	function index($class = '', $directory_id = '') {
-		global $conn;
-
-		$query = <<<QUERY
-		SELECT * FROM SUBMISSIONS;
-QUERY;
-
-		$result = mysqli_query($conn, $query);
-
-		if($result) {
-
-			$submissions = [];
-
-			while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-				$submissions[] = $row;
-			}
-
-			return $submissions;
-
-		} else {
-			$_SESSION['message'] = "Fetching records failed.".mysqli_error($conn);
-			return false;
-		}
-
-
-	}
-
 	function show() {
 
 		//Grab the srudent ID of the logged in user
@@ -82,16 +54,16 @@ H;
 
 	function index() {
 
-		
+
 		//Grab the assignment ID from the url
 		$assignmentID = $_GET['assignmentid'];
 		//Query the database to get the assignment based on the directory id and the assignment id
 		$query = <<<QUERY
-		SELECT * 
+		SELECT *
 		FROM SUBMISSIONS
 		WHERE assignment_id = $assignmentID;
 QUERY;
-		
+
 		$result = mysqli_query(DatabaseProvider::getInstance()->getConnectionString(), $query);
 		//Checking if a submission exists
 		if($result->num_rows == 0){
@@ -191,12 +163,12 @@ H;
 		SELECT * FROM STUDENTS
 		WHERE DIRECTORY_ID = $id;
 QUERY;
-		
+
 		$result = mysqli_query(DatabaseProvider::getInstance()->getConnectionString(), $query);
 		//Exactly one result
 		$student = $result-> fetch_assoc();
 		return $student['name'];
-		
+
 	}
 
 
@@ -206,4 +178,3 @@ QUERY;
 	}
 
 ?>
-
