@@ -50,7 +50,7 @@
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="showClasses.php"  class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="../"  class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
@@ -64,7 +64,7 @@
 		</div>
 
 		<div id="mainDiv">
-		<div class="container-fluid">
+		<div class="container">
 			<b> Current Assignments</b>
 			<?php
 
