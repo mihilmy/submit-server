@@ -10,7 +10,7 @@ if( !isset($_SESSION))
 	session_start();
 }
 	if(!isset($_GET['assignmentid']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
-		header("Location: ./showClasses.php");
+		header("Location: ../");
 	}
 	$conn = DatabaseProvider::getInstance()->getConnectionString();
 	if(isset($_SESSION['current_teacher'])) {
@@ -23,7 +23,7 @@ if( !isset($_SESSION))
 
 	$result = $conn->query($sql);
 	 if($result->num_rows == 0 && !isset($_SESSION['current_teacher'])) {
-		 header("Location: ../Classes/showClasses.php");
+		 header("Location: ../");
 	 } else {
 		 $row = $result->fetch_assoc();
 		 $className = $row['class_name'];
@@ -56,7 +56,7 @@ if( !isset($_SESSION))
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="../Classes/showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="../" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
