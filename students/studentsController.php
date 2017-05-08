@@ -9,7 +9,15 @@
 	function show() {
 		global $conn;
 		
-		$directoryId = $_SESSION['current_student']->getDirectoryId();
+		$studentInfo = [];
+		
+		if (isset($_GET['directory_id'])) {
+			$directoryId = $_GET['directory_id'];
+			$studentInfo[] = getStudentWithParams($directoryId);
+		} else {
+			$directoryId = $_SESSION['current_student']->getDirectoryId();
+			$studentInfo[] = $_SESSION['current_student'];
+		}
 		
 		$query = <<<QUERY
 		SELECT * FROM STUDENT_CLASSES 
@@ -32,7 +40,9 @@ QUERY;
 				$classes[] = $row["class_name"];
 			}
 			
-			return $classes;
+			$studentInfo[] = $classes;
+			
+			return $studentInfo;
 			
 		} else {
 			$_SESSION['message'] = "Fetching records failed.".mysqli_error($conn);
@@ -76,6 +86,37 @@ QUERY;
 		}
 		
 	}
+
+	function getStudentWithParams($directoryId){
+		global $conn;
+		
+		$query = <<<QUERY
+		SELECT * FROM STUDENTS
+		WHERE DIRECTORY_ID = $directoryId;
+QUERY;
+		
+		$result = mysqli_query($conn, $query);
+		
+		if($result) {
+			$numberOfRows = mysqli_num_rows($result);
+			
+			if ($numberOfRows == 0) {
+				$_SESSION['message'] = "Student does not exist in our database";
+				return false;
+			}
+			
+			$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+			
+			$student = new Student($row['name'],$row['email'],$row['directory_ID']);
+			
+			return $student;
+			
+		} else {
+			$_SESSION['message'] = "Fetching records failed.".mysqli_error($conn);
+			return false;
+		}
+	}
+
 
 
 	

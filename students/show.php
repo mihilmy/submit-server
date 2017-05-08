@@ -41,20 +41,20 @@ require_once("../Services/utils.php"); redirectIfNotLoggedIn(); ?>
         </div>
       </div>
     </div>
-
+		<?php $studentInfo = show(); ?>
     <div class="container">
     	<header>
-				<h3><u><?php echo $_SESSION['current_student']->getName(); ?></u></h3>
+				<h3><u><?php echo $studentInfo[0]->getName(); ?></u></h3>
     	</header>
 
     	<div class="row">
     		<label class="col-md-2">Email: </label>
-    		<p><?php echo $_SESSION['current_student']->getEmail(); ?></p>
+    		<p><?php echo $studentInfo[0]->getEmail(); ?></p>
     	</div>
 
     	<div class="row">
     		<label class="col-md-2">Directory ID: </label>
-    		<p><?php echo $_SESSION['current_student']->getDirectoryId(); ?></p>
+    		<p><?php echo $studentInfo[0]->getDirectoryId(); ?></p>
     	</div>
 
     	<div class="row">
@@ -63,7 +63,7 @@ require_once("../Services/utils.php"); redirectIfNotLoggedIn(); ?>
 
     	<div class="row">
     		<ul>
-    			<?php $classes = show(); foreach($classes as $class) {
+    			<?php $classes = $studentInfo[1]; foreach($classes as $class) {
 					$url = "\"../Classes/showAssignments.php?course=".$class."\""; ?>
     			<li><a href=<?php echo $url; ?> > <?php echo $class ?></a></li>
     			<?php } ?>

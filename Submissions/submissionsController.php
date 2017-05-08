@@ -10,6 +10,7 @@
 
 	$conn = DatabaseProvider::getInstance()->getConnectionString();
 
+
 	function index($class = '', $directory_id = '') {
 		global $conn;
 
@@ -90,6 +91,11 @@ H;
 QUERY;
 
 		$result = mysqli_query($conn, $query);
+		
+	}
+
+
+	function runTestFile() {
 		
 	}
 
