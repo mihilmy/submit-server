@@ -61,7 +61,7 @@ if($result->num_rows == 0) {
 								<span class="icon-bar"></span>
 						</button>
 
-						<a href="../Classes/showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
+						<a href="../" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
 				</div>
 
 			</div>

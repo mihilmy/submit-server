@@ -50,7 +50,7 @@ require_once("../Teachers/teacher.php");
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="../Classes/showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="../" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
@@ -64,8 +64,9 @@ require_once("../Teachers/teacher.php");
 		</div>
 
 		<div id="mainDiv">
-		<div class="container-fluid">
+		<div class="container">
 			<b> Assignment Info</b>
+
 			<?php
 
 
@@ -79,6 +80,9 @@ require_once("../Teachers/teacher.php");
 				echo "(Class: $className)";
 
 	       ?>
+				 <br>
+				 <br>
+
 			<ul class="list-group">
 
 			<?php
@@ -112,8 +116,27 @@ H;
 							echo <<<H
 							<div class="col-sm">
 							<br>
+							<b >Submission File: </b>
 
-									<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
+
+									<form method="post" enctype="multipart/form-data" class="form-horizontal">
+
+									<br>
+									<div class="form-group">
+
+										<div class="col-sm-4">
+											<input type="file" name="uploaded_file" class="form-control" required>
+										</div>
+									</div>
+
+									<div class="form-group">
+
+										<div class="col-sm-4">
+										<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
+
+										</div>
+									</div>
+									</form>
 							</div>
 H;
 			} else {
