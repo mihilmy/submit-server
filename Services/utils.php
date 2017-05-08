@@ -19,4 +19,10 @@
 			header("Location: Students/show.php");
 		}
 	}
+
+	function redirectIfNotLoggedIn(){
+    if(!isset($_SESSION['current_teacher']) && !isset($_SESSION['current_student'])) {
+			header("Location: index.php");
+		}
+  }
 ?>

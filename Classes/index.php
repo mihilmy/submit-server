@@ -3,6 +3,7 @@
 		if(!isset($_GET['course'])) {
 			header('Location:'.$_SERVER['REQUEST_URI'].'/../../login.php');
 		}
+		require_once("Services/utils.php"); redirectIfNotLoggedIn();
 ?>
 
 <!DOCTYPE html>
@@ -37,13 +38,15 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
-						
-						
 				</div>
-				
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="logout.php">Log Out</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
-		
+
 		<div id="mainDiv">
 		<div class="container-fluid">
 			<table class="table table-condensed">
@@ -54,7 +57,7 @@
 						<th>Max Score</th>
 						<th>Due Date</th>
 						<th>Assignment Link</th>
-						
+
 					</tr>
 				</thead>
 				<tbody>
@@ -76,15 +79,15 @@ H;
 					?>
 				</tbody>
 			</table>
-			
+
 		<?php
 		$example = [1,"DoublyLinkedList",$_GET['course'],'11/4',100,1,'11/4'];
-		
+
 		//echo $example[0];
 		?>
-			
+
 		</div>
-	 	
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->

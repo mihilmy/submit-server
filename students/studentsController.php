@@ -40,12 +40,25 @@ QUERY;
 		}
 	}
 
-	function index($class = null) {
+	function index() {
 		global $conn;
+		
+		if (isset($_GET['course'])) {
+		$name = $_GET['course'];
+		
+		$query = <<<QUERY
+		SELECT S.directory_ID, S.email, S.name 
+		FROM STUDENTS S, STUDENT_CLASSES SC
+		WHERE S.DIRECTORY_ID = SC.DIRECTORY_ID AND SC.CLASS_NAME = '$name';
+QUERY;
+		
+		} else {
 		
 		$query = <<<QUERY
 		SELECT * FROM STUDENTS;
 QUERY;
+			
+		}
 		
 		$result = mysqli_query($conn, $query);
 		

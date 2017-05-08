@@ -2,6 +2,8 @@
 require_once("../Services/DatabaseProvider.php");
 require_once("../students/student.php");
 require_once("../Teachers/teacher.php");
+require_once("../Submissions/submissionsController.php");
+require_once("Services/utils.php"); redirectIfNotLoggedIn(); 
 	session_start();
 	if(!isset($_GET['assignmentid']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
 		header("Location: ./showClasses.php");
@@ -56,10 +58,12 @@ require_once("../Teachers/teacher.php");
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
-
-
 				</div>
-
+				<div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="logout.php">Log Out</a></li>
+          </ul>
+        </div>
 			</div>
 		</div>
 
@@ -113,6 +117,10 @@ H;
 }
 
 			 if(!isset($_SESSION['current_teacher']))  {
+			 	//Call the show() function from the submission controller
+			 	show();
+
+
 							echo <<<H
 							<div class="col-sm">
 							<br>

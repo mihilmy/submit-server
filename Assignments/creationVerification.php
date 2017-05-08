@@ -46,13 +46,18 @@ if(isset($_POST['submitNewAssignment'])) {
           if(mysqli_connect_errno()) {
             die("MySQL connection failed: ". mysqli_connect_error());
           }
+          $id = $newAssignment->getId();
+          $mainDir = "../files/".$_POST['courseName']."/".$id."/";
 
           // Gather all required data
           $name = $dbLink->real_escape_string($_FILES['uploaded_file']['name']);
           $mime = $dbLink->real_escape_string($_FILES['uploaded_file']['type']);
           $data = $dbLink->real_escape_string(file_get_contents($_FILES  ['uploaded_file']['tmp_name']));
           $size = intval($_FILES['uploaded_file']['size']);
-
+          $tmp_name = $_FILES["uploaded_file"]["tmp_name"];
+          mkdir($mainDir, 0755, true);
+          move_uploaded_file($tmp_name, "$mainDir/test.rb");
+          //rename()
           // Create the SQL query
           $query = "
             INSERT INTO `tests` (
@@ -87,8 +92,7 @@ if(isset($_POST['submitNewAssignment'])) {
 
     if($newAssignment != null) {
         echo 'The assignment has been succefully created, do not update the page';
-        sleep(1);
-        header("Location: ../Classes/showAssignments.php?course={$_POST['courseName']}");  
+        header("Location: ../Classes/showAssignments.php?course={$_POST['courseName']}");
     } else {
         echo 'failed';
     }
@@ -103,7 +107,7 @@ if(isset($_POST['submitNewAssignment'])) {
         $newAssignment->setMaxScore($_POST['maxScore']);
 
         echo 'success';
-        sleep(1);
+        
         header("Location: ../Classes/showAssignments.php?course={$newAssignment->getCourseName()}");
     } else {
         echo 'fail';
