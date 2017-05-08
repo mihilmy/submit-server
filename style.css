@@ -13,3 +13,11 @@ header {
 .navbar-brand {
 	padding: 7px;
 }
+
+.navbar a {
+    color: #fff !important;
+}
+
+.navbar a:hover {
+    background-color: darkred !important;
+}
