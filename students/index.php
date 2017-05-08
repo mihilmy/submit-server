@@ -1,4 +1,5 @@
-<?php require_once("studentsController.php"); ?>
+<?php require_once("studentsController.php");
+require_once("../Services/utils.php"); redirectIfNotLoggedIn(); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,18 +31,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            
+
             <a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
         </div>
-        
+
       </div>
     </div>
-    
+
     <div class="container">
 			<header>
     		<h1><u>All Students</u></h1>
     	</header>
-			
+
 			<table class="table">
 				<thead>
 					<tr>
@@ -50,7 +51,7 @@
 						<th>Email</th>
 					</tr>
 				</thead>
-				
+
 				<tbody>
 					<?php $students = index(); foreach($students as $student) { ?>
 					<tr>
@@ -62,8 +63,8 @@
 				</tbody>
 			</table>
     </div>
-    
-   	
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

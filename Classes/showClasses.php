@@ -1,6 +1,7 @@
 <?php
 	require_once("../students/student.php");
 	require_once("../Teachers/teacher.php");
+	require_once("../Services/utils.php"); redirectIfNotLoggedIn(); 
 	session_start();
 	$isTeacher = false;
 	if(!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher'])) {
@@ -50,10 +51,12 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 						</button>
-
-
 				</div>
-
+				<div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="logout.php">Log Out</a></li>
+          </ul>
+        </div>
 			</div>
 		</div>
 
