@@ -11,7 +11,7 @@ def min(arr)
 end
 
 def max(arr)
-	return 0
+	return arr.max
 end
 
 def contains(arr,e) 
