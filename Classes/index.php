@@ -3,7 +3,7 @@
 		if(!isset($_GET['course'])) {
 			header('Location:'.$_SERVER['REQUEST_URI'].'/../../login.php');
 		}
-		require_once("Services/utils.php"); redirectIfNotLoggedIn();
+		require_once("../Services/utils.php"); redirectIfNotLoggedIn();
 ?>
 
 <!DOCTYPE html>

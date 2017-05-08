@@ -1,7 +1,7 @@
 <?php
 	require_once("../students/student.php");
 	require_once("../Teachers/teacher.php");
-	require_once("Services/utils.php"); redirectIfNotLoggedIn(); 
+	require_once("../Services/utils.php"); redirectIfNotLoggedIn(); 
 	session_start();
 	$isTeacher = false;
 	if(!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher'])) {
