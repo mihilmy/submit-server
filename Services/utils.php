@@ -1,6 +1,8 @@
 <?php
+if( !isset($_SESSION))
+{
 	session_start();
-
+}
 	function getMessage() {
 		if(isset($_SESSION['message'])){
 			$message = $_SESSION['message'];
