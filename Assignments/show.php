@@ -52,7 +52,7 @@ require_once("../Services/utils.php"); redirectIfNotLoggedIn();
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="../" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="../Classes/showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
@@ -68,9 +68,8 @@ require_once("../Services/utils.php"); redirectIfNotLoggedIn();
 		</div>
 
 		<div id="mainDiv">
-		<div class="container">
+		<div class="container-fluid">
 			<b> Assignment Info</b>
-
 			<?php
 
 
@@ -84,9 +83,6 @@ require_once("../Services/utils.php"); redirectIfNotLoggedIn();
 				echo "(Class: $className)";
 
 	       ?>
-				 <br>
-				 <br>
-
 			<ul class="list-group">
 
 			<?php
@@ -119,35 +115,17 @@ H;
 			 if(!isset($_SESSION['current_teacher']))  {
 			 	//Call the show() function from the submission controller
 			 	show();
-
-
+	 		
 							echo <<<H
 							<div class="col-sm">
 							<br>
-							<b >Submission File: </b>
 
-
-									<form method="post" enctype="multipart/form-data" class="form-horizontal">
-
-									<br>
-									<div class="form-group">
-
-										<div class="col-sm-4">
-											<input type="file" name="uploaded_file" class="form-control" required>
-										</div>
-									</div>
-
-									<div class="form-group">
-
-										<div class="col-sm-4">
-										<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
-
-										</div>
-									</div>
-									</form>
+									<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
 							</div>
 H;
 			} else {
+				index();
+				
 				echo <<<H
 				<div class="col-sm">
 				<br>
