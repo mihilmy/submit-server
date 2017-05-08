@@ -51,7 +51,7 @@ CREATE TABLE submissions (
 assignment_ID INT NOT NULL,
 directory_ID INT NOT NULL,
 score INT,
-submission_file BLOB,
+submission_file varchar(255),
 FOREIGN KEY(assignment_ID) REFERENCES assignments(assignment_ID),
 FOREIGN KEY(directory_ID) REFERENCES students(directory_ID));
 
