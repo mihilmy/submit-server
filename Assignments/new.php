@@ -11,7 +11,7 @@ $conn = DatabaseProvider::getInstance()->getConnectionString();
 $sql = "SELECT * FROM classes where teacher_ID='{$_SESSION['current_teacher']->getDirectoryId()}' and
 name='{$_GET['course']}'";
 $result = $conn->query($sql);
-echo $sql;
+//echo $sql;
 if($result->num_rows == 0) {
 	//echo $sql;
 	header("Location: ../Classes/showClasses.php");
