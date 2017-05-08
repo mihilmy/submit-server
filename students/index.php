@@ -1,5 +1,5 @@
 <?php require_once("studentsController.php");
-require_once("Services/utils.php"); redirectIfNotLoggedIn(); ?>
+require_once("../Services/utils.php"); redirectIfNotLoggedIn(); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

@@ -3,7 +3,7 @@ require_once("../Services/DatabaseProvider.php");
 require_once("../students/student.php");
 require_once("../Teachers/teacher.php");
 require_once("../Submissions/submissionsController.php");
-require_once("Services/utils.php"); redirectIfNotLoggedIn(); 
+require_once("../Services/utils.php"); redirectIfNotLoggedIn(); 
 	session_start();
 	if(!isset($_GET['assignmentid']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
 		header("Location: ./showClasses.php");
