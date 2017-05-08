@@ -1,5 +1,5 @@
 <?php
-	runTestFile("CMSC430","6","8478478");
+	
 	//Score for this assignment
 	$score = 0;
 	//File for this assignment
@@ -119,25 +119,27 @@ H;
 		          mkdir($mainDir, 0755, true);
 						}
 		          move_uploaded_file($tmp_name, "$mainDir/file.rb");
-		          //rename()
+
+							$finalScore = runTestFile($_POST['courseName'],$aid,$sid);
+		          echo $finalScore;
+							//rename()
 		          // Create the SQL query
 		          $query = "
 		            INSERT INTO `submissions` (
 		              `assignment_ID`, `directory_ID`, `score`, `submission_file`)
 		            VALUES (
-		              '{$aid}', '{$sid}',0, '$name' )";
+		              '{$aid}', '{$sid}',$finalScore, '$name' )";
+							$queryRemove = "delete from `submissions` where `directory_ID` = $sid and `assignment_ID` = $aid";
 		        //echo "<pre>{$query}</pre>";;
 		          // Execute the query
+							$conn->query($queryRemove);
 		          $result = $conn->query($query);
 
 		          // Check if it was successfull
-		          if($result) {
-								header("Location:"."../Assignments/show.php?assignmentid=$aid");
-		          }
-		          else {
-		            echo 'Error! Failed to insert the file'
-		               . "<pre>{$conn->error}</pre>";
-		          }
+
+
+							header("Location:"."../Assignments/show.php?assignmentid=$aid");
+
 		        }
 		        else {
 		          echo 'No file was uploaded';
@@ -171,24 +173,44 @@ QUERY;
 
 	}
 
-
-
 	function runTestFile($class_name,$assignment_id,$directory_id) {
+		global $conn;
+		
 		//Copy the test file to the students directory
 		copy("../files/$class_name/$assignment_id/test.rb", "../files/$class_name/$assignment_id/$directory_id/studentTester.rb");
-		echo system("ruby ../files/$class_name/$assignment_id/$directory_id/studentTester.rb");
-		
-		//$requireLine = "require './file.rb'";
-		//$testFile = file_get_contents("../files/$class_name/$assignment_id/test.rb");
-		//$testRunner = fopen("../files/$class_name/$assignment_id/$directory_id/testRunner.rb", "w");
-		//fwrite($testRunner, $requireLine.$testFile);
-		//$result = system("ruby ../files/$class_name/$assignment_id/$directory_id/testRunner.rb");
+		$result = exec("ruby ../files/$class_name/$assignment_id/$directory_id/studentTester.rb");
+		preg_match('/^(\d+) runs, (\d+) assertions, (\d+) failures, (\d+) errors, (\d+) skips$/', $result, $matches);
 		
 		
+		$numberOfTestCases = $matches[1];
+		$numberOfFailures = $matches[3];
+		
+		$query = <<<QUERY
+		SELECT A.max_score FROM
+		ASSIGNMENTS A
+		WHERE A.ASSIGNMENT_ID = $assignment_id;
+QUERY;
+		
+		$qresult = mysqli_query($conn, $query);
+		
+		if ($qresult) {
+			
+			$row = mysqli_fetch_array($qresult, MYSQLI_ASSOC);
+			
+			return calculateScore($numberOfTestCases, $numberOfFailures, $row['max_score']);
+		} else {
+			$_SESSION['message'] = "Fetching records failed".mysqli_error($conn);
+			return false;
+		}
+
 	}
 
-	function calculateScore() {
+	function calculateScore($numberOfTestCases, $numberOfFailures, $maxScore) {
+		$numberPassed = $numberOfTestCases - $numberOfFailures;
 		
+		$score = intval($numberPassed/$numberOfTestCases * $maxScore);
+		
+		return $score;
 	}
 
 ?>
