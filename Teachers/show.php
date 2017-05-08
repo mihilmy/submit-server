@@ -57,12 +57,21 @@
     	</div>
     	
     	<div class="row">
-    		<ul>
-    			<?php $classes = show(); foreach($classes as $class) { 
-					$url = "\"../Classes/showAssignments.php?course=".$class."\""; ?>
-    			<li><a href=<?php echo $url; ?> > <?php echo $class ?></a></li>
-    			<?php } ?>
-    		</ul>
+            <div class="col-md-3">
+    		<table class="table">
+    			<?php $classes = show(); foreach($classes as $class) {
+					$assignmentsUrl = "\"../Classes/showAssignments.php?course=".$class."\""; 
+                    $studentsUrl = "\"../students/index.php?course=".$class."\""; 
+                ?>
+                    <tr>
+                    <td><h4><?php echo $class ?></h4></td>
+                    <td><a href=<?php echo $studentsUrl; ?> ><button type="button" class="btn btn-danger">Students</button></a></td>
+                    <td><a href=<?php echo $assignmentsUrl; ?> ><button type="button" class="btn btn-danger">Assignments</button></a></td>
+                    </tr>
+                    <?php
+                } ?>
+    		</table>
+            </div>
     	</div>
     </div>
    	
