@@ -1,3 +1,2 @@
 Instruction for test files
-1. Each method should only test one method
-2. You must add require_relative 'file'
+1. You must add require_relative 'file' to the testing file you are uploading
