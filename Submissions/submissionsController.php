@@ -119,25 +119,26 @@ H;
 		          mkdir($mainDir, 0755, true);
 						}
 		          move_uploaded_file($tmp_name, "$mainDir/file.rb");
+
+							$finalScore = runTestFile();
 		          //rename()
 		          // Create the SQL query
 		          $query = "
 		            INSERT INTO `submissions` (
 		              `assignment_ID`, `directory_ID`, `score`, `submission_file`)
 		            VALUES (
-		              '{$aid}', '{$sid}',0, '$name' )";
+		              '{$aid}', '{$sid}',$finalScore, '$name' )";
+							$queryRemove = "delete from `submissions` where `directory_ID` = $sid ";
 		        //echo "<pre>{$query}</pre>";;
 		          // Execute the query
+							$conn->query($queryRemove);
 		          $result = $conn->query($query);
 
 		          // Check if it was successfull
-		          if($result) {
+
+
 								header("Location:"."../Assignments/show.php?assignmentid=$aid");
-		          }
-		          else {
-		            echo 'Error! Failed to insert the file'
-		               . "<pre>{$conn->error}</pre>";
-		          }
+
 		        }
 		        else {
 		          echo 'No file was uploaded';
