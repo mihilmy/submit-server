@@ -83,16 +83,16 @@ H;
 	}
 	function index() {
 
-		
+
 		//Grab the assignment ID from the url
 		$assignmentID = $_GET['assignmentid'];
 		//Query the database to get the assignment based on the directory id and the assignment id
 		$query = <<<QUERY
-		SELECT * 
+		SELECT *
 		FROM SUBMISSIONS
 		WHERE assignment_id = $assignmentID;
 QUERY;
-		
+
 		$result = mysqli_query(DatabaseProvider::getInstance()->getConnectionString(), $query);
 		//Checking if a submission exists
 		if($result->num_rows == 0){
@@ -186,22 +186,19 @@ H;
 
 	}
 
-<<<<<<< HEAD
-?>
-=======
+
 	//Function to grab student name by his student ID
 	function getStudentName($id){
 		$query = <<<QUERY
 		SELECT * FROM STUDENTS
 		WHERE DIRECTORY_ID = $id;
 QUERY;
-		
+
 		$result = mysqli_query(DatabaseProvider::getInstance()->getConnectionString(), $query);
 		//Exactly one result
 		$student = $result-> fetch_assoc();
 		return $student['name'];
-		
+
 	}
 
 ?>
->>>>>>> origin/master

@@ -3,12 +3,8 @@ require_once("../Services/DatabaseProvider.php");
 require_once("../students/student.php");
 require_once("../Teachers/teacher.php");
 require_once("../Submissions/submissionsController.php");
-<<<<<<< HEAD
-
-
-=======
 require_once("../Services/utils.php"); redirectIfNotLoggedIn();
->>>>>>> origin/master
+
 if( !isset($_SESSION))
 {
 	session_start();
@@ -123,7 +119,6 @@ H;
 			 if(!isset($_SESSION['current_teacher']))  {
 			 	//Call the show() function from the submission controller
 			 	show();
-<<<<<<< HEAD
 
 
 							echo <<<H
@@ -148,12 +143,6 @@ H;
 										<input type="hidden" name="courseName" value="$className">
 										<input type="hidden" name="assignmentid" value="{$_GET['assignmentid']}">
 										<input type="submit" name="upload_submission" class="btn btn-success" value="Submit">
-=======
-
-							echo <<<H
-							<div class="col-sm">
-							<br>
->>>>>>> origin/master
 
 									<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
 							</div>
