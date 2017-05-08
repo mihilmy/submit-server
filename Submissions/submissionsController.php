@@ -128,7 +128,7 @@ H;
 		              `assignment_ID`, `directory_ID`, `score`, `submission_file`)
 		            VALUES (
 		              '{$aid}', '{$sid}',$finalScore, '$name' )";
-							$queryRemove = "delete from `submissions` where `directory_ID` = $sid ";
+							$queryRemove = "delete from `submissions` where `directory_ID` = $sid and `assignment_ID` = $aid";
 		        //echo "<pre>{$query}</pre>";;
 		          // Execute the query
 							$conn->query($queryRemove);
