@@ -2,6 +2,7 @@
 require_once("../Services/DatabaseProvider.php");
 require_once("../students/student.php");
 require_once("../Teachers/teacher.php");
+require_once("Services/utils.php"); redirectIfNotLoggedIn();
 session_start();
 if(!isset($_SESSION['current_teacher']) || !isset($_GET['assignmentid'])) {
 	header("Location: ../Classes/showClasses.php");
@@ -63,7 +64,11 @@ if($result->num_rows == 0) {
 
 						<a href="../" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
 				</div>
-
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="logout.php">Log Out</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 

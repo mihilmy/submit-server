@@ -1,4 +1,5 @@
-<?php require_once("teachersController.php");?>
+<?php require_once("teachersController.php");
+require_once("Services/utils.php"); redirectIfNotLoggedIn(); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,38 +31,42 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            
+
             <a href="#" class="navbar-brand"><img src="../img/logo.png" alt="UMD"></a>
         </div>
-        
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="logout.php">Log Out</a></li>
+          </ul>
+        </div>
       </div>
     </div>
-    
+
     <div class="container">
     	<header>
 				<h3><u><?php echo $_SESSION['current_teacher']->getName(); ?></u></h3>
     	</header>
-    	
+
     	<div class="row">
     		<label class="col-md-2">Email: </label>
     		<p><?php echo $_SESSION['current_teacher']->getEmail(); ?></p>
     	</div>
-    	
+
     	<div class="row">
     		<label class="col-md-2">Directory ID: </label>
     		<p><?php echo $_SESSION['current_teacher']->getDirectoryId(); ?></p>
     	</div>
-    	
+
     	<div class="row">
     		<h3 class="col-md-2"><u>Classes</u></h3>
     	</div>
-    	
+
     	<div class="row">
             <div class="col-md-3">
     		<table class="table">
     			<?php $classes = show(); foreach($classes as $class) {
-					$assignmentsUrl = "\"../Classes/showAssignments.php?course=".$class."\""; 
-                    $studentsUrl = "\"../students/index.php?course=".$class."\""; 
+					$assignmentsUrl = "\"../Classes/showAssignments.php?course=".$class."\"";
+                    $studentsUrl = "\"../students/index.php?course=".$class."\"";
                 ?>
                     <tr>
                     <td><h4><?php echo $class ?></h4></td>
@@ -74,7 +79,7 @@
             </div>
     	</div>
     </div>
-   	
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
