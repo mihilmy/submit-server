@@ -3,8 +3,16 @@ require_once("../Services/DatabaseProvider.php");
 require_once("../students/student.php");
 require_once("../Teachers/teacher.php");
 require_once("../Submissions/submissionsController.php");
-require_once("../Services/utils.php"); redirectIfNotLoggedIn(); 
+<<<<<<< HEAD
+
+
+=======
+require_once("../Services/utils.php"); redirectIfNotLoggedIn();
+>>>>>>> origin/master
+if( !isset($_SESSION))
+{
 	session_start();
+}
 	if(!isset($_GET['assignmentid']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
 		header("Location: ./showClasses.php");
 	}
@@ -52,7 +60,7 @@ require_once("../Services/utils.php"); redirectIfNotLoggedIn();
 			<div class="container">
 			 <!--MOBILE MENU-->
 				<div class="navbar-header">
-				<a href="../" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
+				<a href="../Classes/showClasses.php" class="navbar-brand"><img src="../img/logo.png" alt="UMD"> </a>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
@@ -68,9 +76,8 @@ require_once("../Services/utils.php"); redirectIfNotLoggedIn();
 		</div>
 
 		<div id="mainDiv">
-		<div class="container">
+		<div class="container-fluid">
 			<b> Assignment Info</b>
-
 			<?php
 
 
@@ -84,9 +91,6 @@ require_once("../Services/utils.php"); redirectIfNotLoggedIn();
 				echo "(Class: $className)";
 
 	       ?>
-				 <br>
-				 <br>
-
 			<ul class="list-group">
 
 			<?php
@@ -119,6 +123,7 @@ H;
 			 if(!isset($_SESSION['current_teacher']))  {
 			 	//Call the show() function from the submission controller
 			 	show();
+<<<<<<< HEAD
 
 
 							echo <<<H
@@ -127,7 +132,7 @@ H;
 							<b >Submission File: </b>
 
 
-									<form method="post" enctype="multipart/form-data" class="form-horizontal">
+									<form action="../submissions/router.php" method="post" enctype="multipart/form-data" class="form-horizontal">
 
 									<br>
 									<div class="form-group">
@@ -140,14 +145,22 @@ H;
 									<div class="form-group">
 
 										<div class="col-sm-4">
-										<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
+										<input type="hidden" name="courseName" value="$className">
+										<input type="hidden" name="assignmentid" value="{$_GET['assignmentid']}">
+										<input type="submit" name="upload_submission" class="btn btn-success" value="Submit">
+=======
 
-										</div>
-									</div>
-									</form>
+							echo <<<H
+							<div class="col-sm">
+							<br>
+>>>>>>> origin/master
+
+									<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
 							</div>
 H;
 			} else {
+				index();
+
 				echo <<<H
 				<div class="col-sm">
 				<br>
