@@ -120,7 +120,7 @@ H;
 						}
 		          move_uploaded_file($tmp_name, "$mainDir/file.rb");
 
-							$finalScore = runTestFile();
+							$finalScore = runTestFile($_POST['courseName'],$aid,$sid);
 		          //rename()
 		          // Create the SQL query
 		          $query = "
@@ -175,7 +175,7 @@ QUERY;
 
 
 	function runTestFile() {
-		
+
 	}
 
 ?>
