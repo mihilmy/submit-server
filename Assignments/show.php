@@ -65,7 +65,7 @@ if( !isset($_SESSION))
 				</div>
 				<div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="logout.php">Log Out</a></li>
+            <li><a href="..logout.php">Log Out</a></li>
           </ul>
         </div>
 			</div>
