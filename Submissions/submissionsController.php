@@ -1,5 +1,5 @@
 <?php
-	
+
 	//Score for this assignment
 	$score = 0;
 	//File for this assignment
@@ -175,28 +175,28 @@ QUERY;
 
 	function runTestFile($class_name,$assignment_id,$directory_id) {
 		global $conn;
-		
+
 		//Copy the test file to the students directory
 		copy("../files/$class_name/$assignment_id/test.rb", "../files/$class_name/$assignment_id/$directory_id/studentTester.rb");
 		$result = exec("ruby ../files/$class_name/$assignment_id/$directory_id/studentTester.rb");
 		preg_match('/^(\d+) runs, (\d+) assertions, (\d+) failures, (\d+) errors, (\d+) skips$/', $result, $matches);
-		
-		
+
+
 		$numberOfTestCases = $matches[1];
 		$numberOfFailures = $matches[3];
-		
+
 		$query = <<<QUERY
 		SELECT A.max_score FROM
 		ASSIGNMENTS A
 		WHERE A.ASSIGNMENT_ID = $assignment_id;
 QUERY;
-		
+
 		$qresult = mysqli_query($conn, $query);
-		
+
 		if ($qresult) {
-			
+
 			$row = mysqli_fetch_array($qresult, MYSQLI_ASSOC);
-			
+
 			return calculateScore($numberOfTestCases, $numberOfFailures, $row['max_score']);
 		} else {
 			$_SESSION['message'] = "Fetching records failed".mysqli_error($conn);
@@ -207,9 +207,9 @@ QUERY;
 
 	function calculateScore($numberOfTestCases, $numberOfFailures, $maxScore) {
 		$numberPassed = $numberOfTestCases - $numberOfFailures;
-		
+
 		$score = intval($numberPassed/$numberOfTestCases * $maxScore);
-		
+
 		return $score;
 	}
 
