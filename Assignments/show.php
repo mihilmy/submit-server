@@ -72,7 +72,7 @@ if( !isset($_SESSION))
 		</div>
 
 		<div id="mainDiv">
-		<div class="container-fluid">
+		<div class="container">
 			<b> Assignment Info</b>
 			<?php
 
@@ -143,8 +143,6 @@ H;
 										<input type="hidden" name="courseName" value="$className">
 										<input type="hidden" name="assignmentid" value="{$_GET['assignmentid']}">
 										<input type="submit" name="upload_submission" class="btn btn-success" value="Submit">
-
-									<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
 							</div>
 H;
 			} else {

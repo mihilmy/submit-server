@@ -11,35 +11,8 @@
 
 	$conn = DatabaseProvider::getInstance()->getConnectionString();
 
-<<<<<<< HEAD
-	function index($class = '', $directory_id = '') {
-		global $conn;
-
-		$query = <<<QUERY
-		SELECT * FROM SUBMISSIONS;
-QUERY;
-
-		$result = mysqli_query($conn, $query);
-
-		if($result) {
-
-			$submissions = [];
-
-			while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-				$submissions[] = $row;
-			}
-
-			return $submissions;
-
-		} else {
-			$_SESSION['message'] = "Fetching records failed.".mysqli_error($conn);
-			return false;
-		}
 
 
-	}
-=======
->>>>>>> origin/master
 
 	function show() {
 
