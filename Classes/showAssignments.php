@@ -2,7 +2,10 @@
 	require_once("../Services/DatabaseProvider.php");
 	require_once("../students/student.php");
 	require_once("../Teachers/teacher.php");
-	session_start();
+	if( !isset($_SESSION))
+{
+    session_start();
+}
 	if(!isset($_GET['course']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
 		header("Location: ./showClasses.php");
 	}

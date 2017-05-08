@@ -4,7 +4,10 @@ require_once("../students/student.php");
 require_once("../Teachers/teacher.php");
 require_once("../Submissions/submissionsController.php");
 
+if( !isset($_SESSION))
+{
 	session_start();
+}
 	if(!isset($_GET['assignmentid']) || (!isset($_SESSION['current_student']) && !isset($_SESSION['current_teacher']))) {
 		header("Location: ./showClasses.php");
 	}
@@ -117,7 +120,7 @@ H;
 			 if(!isset($_SESSION['current_teacher']))  {
 			 	//Call the show() function from the submission controller
 			 	show();
-			 		
+
 
 							echo <<<H
 							<div class="col-sm">
@@ -125,7 +128,7 @@ H;
 							<b >Submission File: </b>
 
 
-									<form method="post" enctype="multipart/form-data" class="form-horizontal">
+									<form action="../submissions/router.php" method="post" enctype="multipart/form-data" class="form-horizontal">
 
 									<br>
 									<div class="form-group">
@@ -138,7 +141,9 @@ H;
 									<div class="form-group">
 
 										<div class="col-sm-4">
-										<input type="submit" onclick="location.href='submissions/show.php?a_id={$row['assignment_ID']}';" class="btn btn-success" value="Submit">
+										<input type="hidden" name="courseName" value="$className">
+										<input type="hidden" name="assignmentid" value="{$_GET['assignmentid']}">
+										<input type="submit" name="upload_submission" class="btn btn-success" value="Submit">
 
 										</div>
 									</div>
