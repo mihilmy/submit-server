@@ -1,5 +1,5 @@
 <?php
-
+	runTestFile("CMSC430","6","8478478");
 	//Score for this assignment
 	$score = 0;
 	//File for this assignment
@@ -173,7 +173,21 @@ QUERY;
 
 
 
-	function runTestFile() {
+	function runTestFile($class_name,$assignment_id,$directory_id) {
+		//Copy the test file to the students directory
+		copy("../files/$class_name/$assignment_id/test.rb", "../files/$class_name/$assignment_id/$directory_id/studentTester.rb");
+		echo system("ruby ../files/$class_name/$assignment_id/$directory_id/studentTester.rb");
+		
+		//$requireLine = "require './file.rb'";
+		//$testFile = file_get_contents("../files/$class_name/$assignment_id/test.rb");
+		//$testRunner = fopen("../files/$class_name/$assignment_id/$directory_id/testRunner.rb", "w");
+		//fwrite($testRunner, $requireLine.$testFile);
+		//$result = system("ruby ../files/$class_name/$assignment_id/$directory_id/testRunner.rb");
+		
+		
+	}
+
+	function calculateScore() {
 		
 	}
 

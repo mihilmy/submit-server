@@ -1,5 +1,5 @@
-require './file.rb'
 require 'minitest/autorun'
+require './cononical.rb'
 
 class TestCanonical < MiniTest::Unit::TestCase
   def test_is_palindrome
